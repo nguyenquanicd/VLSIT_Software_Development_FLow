@@ -1,0 +1,67 @@
+# One line per required heading of a step document: <step>|<heading text>
+# Read by scripts/sdf-gate.ps1 and by tools/verify-skills.ps1. Keep in step with templates/.
+1|Summary
+1|Scope
+1|Functional requirements
+1|Resource requirements
+1|Security and privacy requirements
+1|Cost requirements
+1|Assumptions
+1|Q&A log
+1|Approval
+2|Summary
+2|Candidate options
+2|Pros and cons per option
+2|Cost profile per option
+2|Comparison table
+2|Recommendation
+2|Q&A log
+2|Decision
+2|Approval
+3|Summary
+3|Architecture
+3|Resource design
+3|Cost design
+3|Security design
+3|Test strategy
+3|Traceability
+3|Q&A log
+3|Approval
+4|Summary
+4|Milestones
+4|Task list
+4|Definition of done
+4|Cost estimate and budget
+4|Test and measurement plan
+4|Q&A log
+4|Approval
+5|Summary
+5|Task log
+5|Resource measurements
+5|Security checks
+5|Cost tracking
+5|Reusable scripts and lessons
+5|Deviations and change requests
+5|Approval
+6|Summary
+6|Traceability matrix
+6|Findings
+6|Resource audit
+6|Security audit
+6|Cost audit
+6|Waivers
+6|Approval
+7|Summary
+7|Release candidate
+7|Pre-release checklist
+7|Cost check
+7|Signing and provenance
+7|Rollout and rollback
+7|Monitoring
+7|Approval
+8|Summary
+8|Sources of feedback
+8|Triage
+8|Reusable scripts and lessons
+8|Next iteration
+8|Approval

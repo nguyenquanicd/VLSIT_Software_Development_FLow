@@ -1,0 +1,83 @@
+{
+    "version":  1,
+    "entries":  [
+                    {
+                        "id":  "LIB-001",
+                        "file":  "backup-folder.ps1",
+                        "version":  "1.0.0",
+                        "purpose":  "Timestamped zip backup of a folder (for example application data) before a migration or risky change",
+                        "steps":  [
+                                      "5",
+                                      "7"
+                                  ],
+                        "platforms":  [
+                                          "windows"
+                                      ],
+                        "tags":  [
+                                     "backup",
+                                     "migration",
+                                     "data",
+                                     "zip"
+                                 ],
+                        "test":  "-Selftest",
+                        "flags":  {
+                                      "network":  false,
+                                      "writesOutside":  false,
+                                      "destructive":  false,
+                                      "needsAdmin":  false
+                                  },
+                        "sha256":  "bc226142a152fbcf36dd7f854568a396bf5f6d29e98703e982234caef420efba",
+                        "added":  "2026-10-09",
+                        "updated":  "2026-10-09",
+                        "source":  "VLSIT_Q3VNLaw_Chat_Bot",
+                        "approvedBy":  "initial seed by the repository author, 2026-10-09",
+                        "history":  [
+                                        {
+                                            "version":  "1.0.0",
+                                            "date":  "2026-10-09",
+                                            "note":  "added",
+                                            "approvedBy":  "initial seed by the repository author, 2026-10-09"
+                                        }
+                                    ]
+                    },
+                    {
+                        "id":  "LIB-002",
+                        "file":  "artifact-manifest.ps1",
+                        "version":  "1.0.0",
+                        "purpose":  "Markdown table of release files with size and SHA-256, for the release candidate record",
+                        "steps":  [
+                                      "7"
+                                  ],
+                        "platforms":  [
+                                          "windows"
+                                      ],
+                        "tags":  [
+                                     "release",
+                                     "hash",
+                                     "sha256",
+                                     "manifest",
+                                     "artifacts"
+                                 ],
+                        "test":  "-Selftest",
+                        "flags":  {
+                                      "network":  false,
+                                      "writesOutside":  false,
+                                      "destructive":  false,
+                                      "needsAdmin":  false
+                                  },
+                        "sha256":  "a0bc4a523f2738956b8ec7c9f34bcc604b349e24ace84a78dd18bac92d886e9f",
+                        "added":  "2026-10-09",
+                        "updated":  "2026-10-09",
+                        "source":  "VLSIT_Q3VNLaw_Chat_Bot",
+                        "approvedBy":  "initial seed by the repository author, 2026-10-09",
+                        "history":  [
+                                        {
+                                            "version":  "1.0.0",
+                                            "date":  "2026-10-09",
+                                            "note":  "added",
+                                            "approvedBy":  "initial seed by the repository author, 2026-10-09"
+                                        }
+                                    ]
+                    }
+                ]
+}
