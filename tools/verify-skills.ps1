@@ -155,6 +155,9 @@ foreach ($rel in $authorFiles) {
 if ($authorMissing.Count -eq 0) { Pass "author information (name and GitHub link) is in NOTICE, the README and every skill ($($authorFiles.Count) files)" } else { Fail "author information is missing from: $($authorMissing -join ', ')" }
 $masterT2 = Read-Text (Join-Path $root '.claude\skills\vlsit-sdf-flow\references\master-template.md')
 if ($masterT2.IndexOf($authorName, [System.StringComparison]::Ordinal) -ge 0) { Pass 'the MASTER template names the method and its author' } else { Fail 'the MASTER template does not name the author' }
+$readmeText = Read-Text (Join-Path $root 'README.md')
+$sdfMissing = @('What does SDF mean?', 'Software Development Flow', 'Standard Delay Format', 'vlsit-sdf-requirements') | Where-Object { $readmeText.IndexOf($_, [System.StringComparison]::Ordinal) -lt 0 }
+if (@($sdfMissing).Count -eq 0) { Pass 'the README explains what SDF means (and what it is not)' } else { Fail "the README lacks: $($sdfMissing -join ', ')" }
 $coreScripts = @(Get-ChildItem -LiteralPath $root -Recurse -File -Filter *.ps1 | Where-Object { $_.FullName -notmatch '\\\.git\\' -and $_.FullName -notmatch '\\\.agents\\' -and $_.FullName -notmatch '\\library\\scripts\\' })
 $noNotes = @($coreScripts | Where-Object { (Read-Text $_.FullName) -notmatch 'Author: Nguyen Quan \(https://github\.com/nguyenquanicd\)' } | ForEach-Object { $_.Name })
 $libScripts = @(Get-ChildItem -LiteralPath (Join-Path $root '.claude\skills\vlsit-sdf-flow\library\scripts') -File -Filter *.ps1)

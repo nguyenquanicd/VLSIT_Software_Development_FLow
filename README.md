@@ -9,7 +9,7 @@ Chín skill AI theo cặp cho **Codex** và **Claude Code**, hướng dẫn tr�
 
 **Author / Tác giả:** Nguyễn Quân — GitHub [@nguyenquanicd](https://github.com/nguyenquanicd) — Repository: [VLSIT_Software_Development_FLow](https://github.com/nguyenquanicd/VLSIT_Software_Development_FLow) — Apache License 2.0.
 
-**Naming / Cách đặt tên:** every skill is named `vlsit-sdf-<name>`: `vlsit-` is the prefix shared by all VLSIT skills and `sdf` stands for *software development flow* (the orchestrator is `vlsit-sdf-flow`). The project documents folder keeps the short name `docs/sdf/`. / Mọi skill đặt tên `vlsit-sdf-<tên>`: `vlsit-` là tiền tố chung của các skill VLSIT và `sdf` là viết tắt của *software development flow* (skill tổng là `vlsit-sdf-flow`). Thư mục tài liệu dự án giữ tên ngắn `docs/sdf/`.
+**Naming / Cách đặt tên:** every skill is named `vlsit-sdf-<name>`: `vlsit-` is the prefix shared by all VLSIT skills and `sdf` stands for *software development flow* (the orchestrator is `vlsit-sdf-flow`). The project documents folder keeps the short name `docs/sdf/`. / Mọi skill đặt tên `vlsit-sdf-<tên>`: `vlsit-` là tiền tố chung của các skill VLSIT và `sdf` là viết tắt của *software development flow* (skill tổng là `vlsit-sdf-flow`). Thư mục tài liệu dự án giữ tên ngắn `docs/sdf/`. What SDF means is explained in section 1. / Ý nghĩa của SDF được giải thích ở mục 1.
 
 ## Contents / Mục lục
 
@@ -55,6 +55,35 @@ Chín skill AI theo cặp cho **Codex** và **Claude Code**, hướng dẫn tr�
 | 7 | **A script library that improves with each build.** Reusable scripts are saved, checked and reused, with your approval. | **Thư viện script cải thiện sau mỗi lần build.** Script tái sử dụng được lưu, kiểm tra và dùng lại, khi bạn duyệt. |
 | 8 | **Safe by design.** The AI never handles private keys, never spends money or publishes without your confirmation, and never edits its own instructions. | **An toàn từ thiết kế.** AI không bao giờ xử lý khóa riêng, không chi tiền hay phát hành khi chưa được bạn xác nhận, và không tự sửa hướng dẫn của chính nó. |
 | 9 | **You always know where you are.** Every question starts with a progress line: the step that is running and how many steps remain. | **Bạn luôn biết mình đang ở đâu.** Mỗi câu hỏi mở đầu bằng một dòng tiến độ: bước đang chạy và số bước còn lại. |
+
+### What does SDF mean? / SDF nghĩa là gì?
+
+**English.** **SDF** stands for **Software Development Flow**: the eight-step process that these skills teach an AI assistant to follow (requirements, options, design, plan, build and test, review, release, feedback). The full name of the project is *VLSIT Software Development Flow*; the short form `sdf` is used wherever a long name would be awkward, such as folder names, file names and markers. A skill name has three parts:
+
+**Tiếng Việt.** **SDF** là viết tắt của **Software Development Flow**, nghĩa là **quy trình phát triển phần mềm**: quy trình tám bước mà các skill này dạy trợ lý AI thực hiện (yêu cầu, phương án, thiết kế, kế hoạch, xây dựng và kiểm thử, rà soát, phát hành, phản hồi). Tên đầy đủ của dự án là *VLSIT Software Development Flow*; dạng viết tắt `sdf` được dùng ở nơi tên dài bất tiện, như tên thư mục, tên tệp và dấu đánh dấu. Tên một skill gồm ba phần:
+
+```
+vlsit-sdf-requirements
+  |     |      |
+  |     |      +-- role: the step it performs ("flow" for the orchestrator)
+  |     |          vai trò: bước mà skill thực hiện ("flow" là skill tổng)
+  |     +--------- SDF: Software Development Flow, the product
+  |                SDF: quy trình phát triển phần mềm, tên sản phẩm
+  +--------------- VLSIT: the prefix shared by all VLSIT skills
+                   VLSIT: tiền tố chung của mọi skill VLSIT
+```
+
+| Where you see it / Nơi bạn thấy | Example / Ví dụ | Meaning / Ý nghĩa |
+|---|---|---|
+| Skill names / Tên skill | `vlsit-sdf-flow`, `vlsit-sdf-requirements`, `vlsit-sdf-build`, ... | The nine skills: the orchestrator and the eight steps. / Chín skill: skill tổng và tám bước. |
+| Project records folder / Thư mục hồ sơ dự án | `docs/sdf/MASTER.md`, `docs/sdf/01-requirements.md`, ... | Created in your project: everything the flow records lives here. / Được tạo trong dự án của bạn: mọi ghi chép của quy trình nằm ở đây. |
+| Helper script names / Tên script hỗ trợ | `sdf-init.ps1`, `sdf-status.ps1`, `sdf-record.ps1`, `sdf-gate.ps1`, `sdf-library.ps1` | The orchestrator's scripts, in `vlsit-sdf-flow/scripts/`. / Các script của skill tổng, trong `vlsit-sdf-flow/scripts/`. |
+| Placeholder marker / Dấu giữ chỗ | `TODO(sdf)` | Left in the templates; the gate refuses to approve a document that still contains it. / Có sẵn trong các mẫu; cổng từ chối duyệt tài liệu còn dấu này. |
+| Former skill names / Tên skill cũ | `sdf-flow`, `sdf-requirements`, ... | Earlier versions used `sdf-*` without the `vlsit-` prefix (see "Upgrading from the former names" in section 5). / Phiên bản trước dùng `sdf-*` không có tiền tố `vlsit-` (xem "Nâng cấp từ tên cũ" ở mục 5). |
+
+**English.** Not to be confused with the **Standard Delay Format** (`.sdf` files) used for timing back-annotation in chip design, which VLSI engineers also abbreviate SDF. This project has nothing to do with it: here SDF always means *Software Development Flow*.
+
+**Tiếng Việt.** Đừng nhầm với **Standard Delay Format** (tệp `.sdf`) dùng để gán lại thông tin thời gian trong thiết kế chip, mà các kỹ sư VLSI cũng viết tắt là SDF. Dự án này không liên quan gì đến định dạng đó: ở đây SDF luôn nghĩa là *Software Development Flow*.
 
 ### Who it is for / Dành cho ai
 
@@ -706,6 +735,7 @@ tools/                       install.ps1, sync-codex-skills.ps1, verify-skills.p
 
 | Term / Thuật ngữ | Meaning / Ý nghĩa |
 |---|---|
+| SDF | **S**oftware **D**evelopment **F**low: the eight-step process and the name of this project's skills (`vlsit-sdf-*`). Not the Standard Delay Format of chip design. / Quy trình phát triển phần mềm tám bước và tên các skill của dự án này (`vlsit-sdf-*`). Không phải Standard Delay Format của thiết kế chip. |
 | Skill | A folder with a `SKILL.md` that Codex or Claude Code loads on demand. / Thư mục có `SKILL.md` mà Codex hoặc Claude Code nạp khi cần. |
 | Orchestrator / Skill tổng | `vlsit-sdf-flow`, which runs the steps and the gates. / `vlsit-sdf-flow`, chạy các bước và các cổng. |
 | Gate / Cổng | A check that must pass before a step starts, is presented, or is recorded. / Điểm kiểm tra phải đạt trước khi bắt đầu, trình bày hoặc ghi nhận một bước. |
