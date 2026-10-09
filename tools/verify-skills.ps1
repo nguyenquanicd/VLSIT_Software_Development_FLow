@@ -17,6 +17,8 @@
 
 .EXAMPLE
     powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\verify-skills.ps1
+.NOTES
+    Author: Nguyen Quan (https://github.com/nguyenquanicd) - VLSIT Software Development Flow, Apache License 2.0
 #>
 [CmdletBinding()]
 param([switch]$SkipSmoke)
@@ -24,7 +26,7 @@ param([switch]$SkipSmoke)
 $ErrorActionPreference = 'Stop'
 $utf8 = New-Object System.Text.UTF8Encoding($false)
 $root = Split-Path -Parent $PSScriptRoot
-$expected = @('sdf-flow', 'sdf-requirements', 'sdf-options', 'sdf-design', 'sdf-plan', 'sdf-build', 'sdf-review', 'sdf-release', 'sdf-feedback')
+$expected = @('vlsit-sdf-flow', 'vlsit-sdf-requirements', 'vlsit-sdf-options', 'vlsit-sdf-design', 'vlsit-sdf-plan', 'vlsit-sdf-build', 'vlsit-sdf-review', 'vlsit-sdf-release', 'vlsit-sdf-feedback')
 $trees = @('.claude\skills', '.agents\skills')
 $fails = New-Object System.Collections.ArrayList
 $checks = 0
@@ -36,7 +38,7 @@ function Read-Text([string]$p) { [System.IO.File]::ReadAllText($p, $utf8) }
 foreach ($t in $trees) {
     $dir = Join-Path $root $t
     if (-not (Test-Path -LiteralPath $dir)) { Fail "$t does not exist"; continue }
-    $names = @(Get-ChildItem -LiteralPath $dir -Directory | Where-Object { $_.Name -like 'sdf-*' } | ForEach-Object { $_.Name })
+    $names = @(Get-ChildItem -LiteralPath $dir -Directory | Where-Object { $_.Name -like 'vlsit-sdf-*' } | ForEach-Object { $_.Name })
     $missing = $expected | Where-Object { $names -notcontains $_ }
     $extra = $names | Where-Object { $expected -notcontains $_ }
     if ($missing) { Fail "$t is missing: $($missing -join ', ')" } elseif ($extra) { Fail "$t has unexpected skills: $($extra -join ', ')" } else { Pass "$t holds the nine skills" }
@@ -59,6 +61,7 @@ foreach ($t in $trees) {
         $ok = $true
         if ($n -ne $name) { Fail "$t\$name : frontmatter name '$n' differs from the folder"; $ok = $false }
         if ($n -notmatch '^[a-z0-9]+(-[a-z0-9]+)*$' -or $n.Length -gt 64) { Fail "$t\$name : invalid name"; $ok = $false }
+        if ($n -notmatch '^vlsit-') { Fail "$t\$name : the name must start with vlsit-"; $ok = $false }
         if ($d.Length -lt 20 -or $d.Length -gt 1024) { Fail "$t\$name : description length $($d.Length) is outside 20..1024"; $ok = $false }
         if ($d -match ': ' -or $d -match ' #' -or $d -match '^[''"]') { Fail "$t\$name : the description contains ': ', ' #' or starts with a quote, which breaks plain YAML"; $ok = $false }
         $lines = ($text -split "\r?\n").Count
@@ -77,7 +80,7 @@ foreach ($name in $expected) {
     foreach ($f in $files) {
         $text = Read-Text $f.FullName
         $cands = New-Object System.Collections.ArrayList
-        foreach ($m in [regex]::Matches($text, '`((?:\.\./sdf-[a-z]+/|scripts/|references/|library/)[^`\s]*)`')) { [void]$cands.Add($m.Groups[1].Value) }
+        foreach ($m in [regex]::Matches($text, '`((?:\.\./vlsit-sdf-[a-z]+/|scripts/|references/|library/)[^`\s]*)`')) { [void]$cands.Add($m.Groups[1].Value) }
         foreach ($m in [regex]::Matches($text, '\]\(((?!https?:|#)[^)\s]+)\)')) { [void]$cands.Add($m.Groups[1].Value) }
         foreach ($c in $cands) {
             if ($c -match '[*<>]|0N|nnn') { continue }
@@ -91,9 +94,9 @@ foreach ($name in $expected) {
 }
 
 # 4 ---- required headings vs templates
-$tplDir = Join-Path $root '.claude\skills\sdf-flow\references\templates'
+$tplDir = Join-Path $root '.claude\skills\vlsit-sdf-flow\references\templates'
 $tplName = @{ 1 = '01-requirements.md'; 2 = '02-options.md'; 3 = '03-design.md'; 4 = '04-plan.md'; 5 = '05-build-report.md'; 6 = '06-review.md'; 7 = '07-release.md'; 8 = '08-feedback.md' }
-$reqFile = Join-Path $root '.claude\skills\sdf-flow\references\required-headings.txt'
+$reqFile = Join-Path $root '.claude\skills\vlsit-sdf-flow\references\required-headings.txt'
 $missingHeadings = New-Object System.Collections.ArrayList
 foreach ($l in [System.IO.File]::ReadAllLines($reqFile, $utf8)) {
     if ($l -match '^\s*#' -or $l.Trim() -eq '') { continue }
@@ -102,7 +105,7 @@ foreach ($l in [System.IO.File]::ReadAllLines($reqFile, $utf8)) {
     if ($tpl -notmatch ('(?m)^#{2,3}\s+' + [regex]::Escape($h) + '\s*$')) { [void]$missingHeadings.Add("step ${k}: $h") }
 }
 if ($missingHeadings.Count -eq 0) { Pass 'every required heading exists in its template' } else { Fail "templates lack required headings: $($missingHeadings -join '; ')" }
-$masterT = Read-Text (Join-Path $root '.claude\skills\sdf-flow\references\master-template.md')
+$masterT = Read-Text (Join-Path $root '.claude\skills\vlsit-sdf-flow\references\master-template.md')
 $mOk = $true
 foreach ($k in 1..8) { if ($masterT -notmatch "(?m)^##\s+Step $k - ") { $mOk = $false } }
 foreach ($h in @('Status', 'Resource and security ledger', 'Decisions', 'Assumptions', 'Waivers', 'Change log')) { if ($masterT -notmatch ('(?m)^##\s+' + [regex]::Escape($h) + '\s*$')) { $mOk = $false } }
@@ -110,32 +113,53 @@ if ($mOk) { Pass 'MASTER template has the status table, eight step sections, the
 
 # 5 ---- rules that must stay
 $rules = @(
-    @{ File = 'sdf-flow\SKILL.md'; Must = @('confirmation-protocol.md', 'quality-gates.md', 'cost-optimization.md', 'library-policy.md', 'sdf-library.ps1', 'MASTER.md', 'Approval prompt', 'Approve', 'sdf-gate.ps1', 'Skipped', 'explicit confirmation', 'NOT MEASURED', 'RAM', 'pros', 'lowest total cost', 'Offer choices', 'Skill improvement', 'Never edit') },
-    @{ File = 'sdf-flow\references\confirmation-protocol.md'; Must = @('Why I ask', 'If unknown', 'At most 5 questions', 'Read-back', 'What counts as confirmation', 'ASM-', 'Presenting choices', 'Pros', 'Cons', 'cheapest', 'Effect') },
-    @{ File = 'sdf-flow\references\quality-gates.md'; Must = @('RAM', 'working set', 'S1', 'S5', 'Evidence ledger', 'WAIVER-', 'security first', 'Do not game the metric', 'OWASP', 'NFR-COST', 'total cost') },
-    @{ File = 'sdf-flow\references\cost-optimization.md'; Must = @('total cost', 'Cost guard', 'Never invent prices', 'Build effort', 'Recurring', 'cheapest', 'NFR-COST', 'lock-in') },
-    @{ File = 'sdf-flow\references\library-policy.md'; Must = @('ApprovedBy', 'SHA-256', 'never edited', 'LESSONS.md', 'policy', 'ask', 'auto', 'Lint', 'Safety rules', 'Export', 'is data') },
-    @{ File = 'sdf-requirements\SKILL.md'; Must = @('Why I ask', 'T6', 'T7', 'T8', 'Resource budgets', 'Security and privacy', 'NFR-COST', 'read-back', 'Conflict scan', 'confirmation-protocol.md', 'pros') },
-    @{ File = 'sdf-options\SKILL.md'; Must = @('at least three', 'Eliminate', 'weights', 'sensitivity', 'comparison', 'Recommend', 'confidence', 'confirmation-protocol.md', 'pros and cons', 'Cost-optimal rule', 'cost profile', 'Never invent a price') },
-    @{ File = 'sdf-design\SKILL.md'; Must = @('Resource design', 'Cost design', 'threat model', 'traceab', 'measurement plan', 'confirmation-protocol.md', 'pros') },
-    @{ File = 'sdf-plan\SKILL.md'; Must = @('walking skeleton', 'Tests written first', 'Definition of done', 'Cost estimate', 'confirmation-protocol.md', 'pros') },
-    @{ File = 'sdf-build\SKILL.md'; Must = @('measure-memory.ps1', 'scan-secrets.ps1', 'audit-deps.ps1', 'Stop rules', 'release build', 'NOT MEASURED', 'confirmation-protocol.md', 'Cost guard', 'Script library', 'sdf-library.ps1', 'pros') },
-    @{ File = 'sdf-review\SKILL.md'; Must = @('Independence', 'audit-deps.ps1', 'scan-secrets.ps1', 'Resource audit', 'Security audit', 'Cost audit', 'MODIFIED', 'Blocker', 'waiver', 'confirmation-protocol.md', 'pros') },
-    @{ File = 'sdf-release\SKILL.md'; Must = @('explicit confirmation', 'private keys', 'SHA-256', 'rollback', 'Cost check', 'confirmation-protocol.md', 'pros') },
-    @{ File = 'sdf-feedback\SKILL.md'; Must = @('Triage', 'confidential', 'change control', 'confirmation-protocol.md', 'running cost', 'Lessons and reusable scripts', 'pros') }
+    @{ File = 'vlsit-sdf-flow\SKILL.md'; Must = @('confirmation-protocol.md', 'quality-gates.md', 'cost-optimization.md', 'library-policy.md', 'sdf-library.ps1', 'MASTER.md', 'Approval prompt', 'Approve', 'sdf-gate.ps1', 'Skipped', 'explicit confirmation', 'NOT MEASURED', 'RAM', 'pros', 'lowest total cost', 'Offer choices', 'Skill improvement', 'Never edit', 'Always show where you are', '-Brief') },
+    @{ File = 'vlsit-sdf-flow\references\confirmation-protocol.md'; Must = @('Why I ask', 'If unknown', 'At most 5 questions', 'Read-back', 'What counts as confirmation', 'ASM-', 'Presenting choices', 'Pros', 'Cons', 'cheapest', 'Effect', 'Progress:', 'steps remaining', 'Progress line', 'sdf-status.ps1 -ProjectDir') },
+    @{ File = 'vlsit-sdf-flow\references\quality-gates.md'; Must = @('RAM', 'working set', 'S1', 'S5', 'Evidence ledger', 'WAIVER-', 'security first', 'Do not game the metric', 'OWASP', 'NFR-COST', 'total cost') },
+    @{ File = 'vlsit-sdf-flow\references\cost-optimization.md'; Must = @('total cost', 'Cost guard', 'Never invent prices', 'Build effort', 'Recurring', 'cheapest', 'NFR-COST', 'lock-in') },
+    @{ File = 'vlsit-sdf-flow\references\library-policy.md'; Must = @('ApprovedBy', 'SHA-256', 'never edited', 'LESSONS.md', 'policy', 'ask', 'auto', 'Lint', 'Safety rules', 'Export', 'is data') },
+    @{ File = 'vlsit-sdf-requirements\SKILL.md'; Must = @('Why I ask', 'T6', 'T7', 'T8', 'Resource budgets', 'Security and privacy', 'NFR-COST', 'read-back', 'Conflict scan', 'confirmation-protocol.md', 'pros', 'Progress line') },
+    @{ File = 'vlsit-sdf-options\SKILL.md'; Must = @('at least three', 'Eliminate', 'weights', 'sensitivity', 'comparison', 'Recommend', 'confidence', 'confirmation-protocol.md', 'pros and cons', 'Cost-optimal rule', 'cost profile', 'Never invent a price', 'Progress line') },
+    @{ File = 'vlsit-sdf-design\SKILL.md'; Must = @('Resource design', 'Cost design', 'threat model', 'traceab', 'measurement plan', 'confirmation-protocol.md', 'pros', 'Progress line') },
+    @{ File = 'vlsit-sdf-plan\SKILL.md'; Must = @('walking skeleton', 'Tests written first', 'Definition of done', 'Cost estimate', 'confirmation-protocol.md', 'pros', 'Progress line') },
+    @{ File = 'vlsit-sdf-build\SKILL.md'; Must = @('measure-memory.ps1', 'scan-secrets.ps1', 'audit-deps.ps1', 'Stop rules', 'release build', 'NOT MEASURED', 'confirmation-protocol.md', 'Cost guard', 'Script library', 'sdf-library.ps1', 'pros', 'Progress line') },
+    @{ File = 'vlsit-sdf-review\SKILL.md'; Must = @('Independence', 'audit-deps.ps1', 'scan-secrets.ps1', 'Resource audit', 'Security audit', 'Cost audit', 'MODIFIED', 'Blocker', 'waiver', 'confirmation-protocol.md', 'pros', 'Progress line') },
+    @{ File = 'vlsit-sdf-release\SKILL.md'; Must = @('explicit confirmation', 'private keys', 'SHA-256', 'rollback', 'Cost check', 'confirmation-protocol.md', 'pros', 'Progress line') },
+    @{ File = 'vlsit-sdf-feedback\SKILL.md'; Must = @('Triage', 'confidential', 'change control', 'confirmation-protocol.md', 'running cost', 'Lessons and reusable scripts', 'pros', 'Progress line') }
 )
 foreach ($r in $rules) {
     $text = Read-Text (Join-Path $root ('.claude\skills\' + $r.File))
     $miss = @($r.Must | Where-Object { $text.IndexOf($_, [System.StringComparison]::OrdinalIgnoreCase) -lt 0 })
     if ($miss.Count -eq 0) { Pass "$($r.File) carries its required rules" } else { Fail "$($r.File) lost: $($miss -join ', ')" }
 }
-foreach ($name in $expected | Where-Object { $_ -ne 'sdf-flow' }) {
+foreach ($name in $expected | Where-Object { $_ -ne 'vlsit-sdf-flow' }) {
     $text = Read-Text (Join-Path $root ".claude\skills\$name\SKILL.md")
     if ($text -notmatch 'Exit criteria') { Fail "$name has no exit criteria" }
     if ($text -notmatch 'MASTER\.md') { Fail "$name does not mention MASTER.md" }
     if ($text -notmatch '(?i)cost') { Fail "$name does not mention cost" }
     if ($text -notmatch 'confirmation-protocol\.md') { Fail "$name does not point to the confirmation protocol" }
 }
+
+# 5b ---- author information (this script stays ASCII, so the accented name is built from code points)
+$authorName = 'Nguy' + [char]0x1EC5 + 'n Qu' + [char]0x00E2 + 'n'
+$authorLink = 'github.com/nguyenquanicd'
+$authorMissing = New-Object System.Collections.ArrayList
+$authorFiles = @('NOTICE', 'README.md')
+foreach ($name in $expected) { $authorFiles += ".claude\skills\$name\SKILL.md"; $authorFiles += ".claude\skills\$name\README.md" }
+foreach ($rel in $authorFiles) {
+    $p = Join-Path $root $rel
+    if (-not (Test-Path -LiteralPath $p)) { [void]$authorMissing.Add("$rel (missing file)"); continue }
+    $text = Read-Text $p
+    if ($text.IndexOf($authorName, [System.StringComparison]::Ordinal) -lt 0 -or $text.IndexOf($authorLink, [System.StringComparison]::Ordinal) -lt 0) { [void]$authorMissing.Add($rel) }
+}
+if ($authorMissing.Count -eq 0) { Pass "author information (name and GitHub link) is in NOTICE, the README and every skill ($($authorFiles.Count) files)" } else { Fail "author information is missing from: $($authorMissing -join ', ')" }
+$masterT2 = Read-Text (Join-Path $root '.claude\skills\vlsit-sdf-flow\references\master-template.md')
+if ($masterT2.IndexOf($authorName, [System.StringComparison]::Ordinal) -ge 0) { Pass 'the MASTER template names the method and its author' } else { Fail 'the MASTER template does not name the author' }
+$coreScripts = @(Get-ChildItem -LiteralPath $root -Recurse -File -Filter *.ps1 | Where-Object { $_.FullName -notmatch '\\\.git\\' -and $_.FullName -notmatch '\\\.agents\\' -and $_.FullName -notmatch '\\library\\scripts\\' })
+$noNotes = @($coreScripts | Where-Object { (Read-Text $_.FullName) -notmatch 'Author: Nguyen Quan \(https://github\.com/nguyenquanicd\)' } | ForEach-Object { $_.Name })
+$libScripts = @(Get-ChildItem -LiteralPath (Join-Path $root '.claude\skills\vlsit-sdf-flow\library\scripts') -File -Filter *.ps1)
+$noNotes += @($libScripts | Where-Object { (Read-Text $_.FullName) -notmatch 'Author: Nguyen Quan \(https://github\.com/nguyenquanicd\)' } | ForEach-Object { $_.Name })
+if ($noNotes.Count -eq 0) { Pass "every script header names the author ($($coreScripts.Count + $libScripts.Count) scripts)" } else { Fail "script headers without the author: $($noNotes -join ', ')" }
 
 # 6 ---- scripts
 $scripts = @(Get-ChildItem -LiteralPath $root -Recurse -File -Filter *.ps1 | Where-Object { $_.FullName -notmatch '\\\.git\\' })
@@ -154,11 +178,15 @@ foreach ($s in $scripts) {
 if (-not $SkipSmoke) {
     $tmp = Join-Path ([System.IO.Path]::GetTempPath()) ('sdf-verify-' + [guid]::NewGuid().ToString('N').Substring(0, 8))
     [void](New-Item -ItemType Directory -Path $tmp)
-    $sc = Join-Path $root '.claude\skills\sdf-flow\scripts'
+    $sc = Join-Path $root '.claude\skills\vlsit-sdf-flow\scripts'
     function Run([string]$script, [string[]]$a) { $o = & powershell.exe -NoProfile -ExecutionPolicy Bypass -File $script @a; return @{ Code = $LASTEXITCODE; Out = ($o -join "`n") } }
     try {
+        $r = Run (Join-Path $sc 'sdf-status.ps1') @('-ProjectDir', $tmp, '-Brief')
+        if ($r.Code -eq 0 -and $r.Out -match 'Progress: setup, before step 1' -and $r.Out -match 'steps to come: 8') { Pass 'smoke: the progress line says "setup" before the flow starts' } else { Fail "smoke: progress line before the start: $($r.Out)" }
         $r = Run (Join-Path $sc 'sdf-init.ps1') @('-ProjectDir', $tmp, '-Name', 'Smoke', '-Platforms', 'Windows', '-Language', 'English')
         if ($r.Code -eq 0 -and (Test-Path -LiteralPath "$tmp\docs\sdf\MASTER.md")) { Pass 'smoke: sdf-init creates MASTER.md' } else { Fail "smoke: sdf-init failed: $($r.Out)" }
+        $r = Run (Join-Path $sc 'sdf-status.ps1') @('-ProjectDir', $tmp, '-Brief')
+        if ($r.Code -eq 0 -and $r.Out -match 'step 1 of 8 - Requirements' -and $r.Out -match 'remaining after this one: 7') { Pass 'smoke: the progress line names step 1 and 7 remaining steps' } else { Fail "smoke: progress line at step 1: $($r.Out)" }
         $r = Run (Join-Path $sc 'sdf-gate.ps1') @('-ProjectDir', $tmp, '-Step', '2', '-Mode', 'Start')
         if ($r.Code -eq 1) { Pass 'smoke: step 2 cannot start before step 1 is approved' } else { Fail 'smoke: the gate let step 2 start' }
         $r = Run (Join-Path $sc 'sdf-gate.ps1') @('-ProjectDir', $tmp, '-Step', '1', '-Mode', 'Start')
@@ -186,13 +214,15 @@ if (-not $SkipSmoke) {
         $r = Run (Join-Path $sc 'sdf-record.ps1') @('-ProjectDir', $tmp, '-Step', '1', '-Status', 'Approved', '-Note', 'smoke')
         $st = Run (Join-Path $sc 'sdf-status.ps1') @('-ProjectDir', $tmp)
         if ($r.Code -eq 0 -and $st.Out -match 'Approved' -and $st.Out -match 'step 2') { Pass 'smoke: approval is recorded and the next step is step 2' } else { Fail "smoke: record or status failed: $($r.Out) $($st.Out)" }
+        $br = Run (Join-Path $sc 'sdf-status.ps1') @('-ProjectDir', $tmp, '-Brief')
+        if ($br.Code -eq 0 -and $br.Out -match 'step 2 of 8 - Options' -and $br.Out -match 'remaining after this one: 6 \(3 Design') { Pass 'smoke: after approval the progress line moves to step 2 with 6 steps remaining' } else { Fail "smoke: progress line after approval: $($br.Out)" }
 
         # ledger rule: step 3 needs "Design (3)" evidence for every row
         foreach ($k in 2, 3) {
             $x = Run (Join-Path $sc 'sdf-record.ps1') @('-ProjectDir', $tmp, '-Step', "$k", '-Status', 'Approved', '-Note', 'smoke shortcut', '-NoDoc')
         }
         $docs3 = "$tmp\docs\sdf\03-design.md"
-        Copy-Item -LiteralPath (Join-Path $root '.claude\skills\sdf-flow\references\templates\03-design.md') -Destination $docs3 -Force
+        Copy-Item -LiteralPath (Join-Path $root '.claude\skills\vlsit-sdf-flow\references\templates\03-design.md') -Destination $docs3 -Force
         $t3 = (Read-Text $docs3).Replace('TODO(sdf)', 'filled').Replace('Status: Awaiting approval', 'Status: Approved')
         [System.IO.File]::WriteAllText($docs3, $t3, $utf8)
         $m = Read-Text $mp
@@ -209,32 +239,32 @@ if (-not $SkipSmoke) {
         $sec = Join-Path $tmp 'src'; [void](New-Item -ItemType Directory -Path $sec)
         $fake = 'AKIA' + 'ABCDEFGHIJKLMNOP'
         [System.IO.File]::WriteAllText("$sec\a.txt", "id = $fake`n", $utf8)
-        $r = Run (Join-Path $root '.claude\skills\sdf-review\scripts\scan-secrets.ps1') @('-Path', $sec)
+        $r = Run (Join-Path $root '.claude\skills\vlsit-sdf-review\scripts\scan-secrets.ps1') @('-Path', $sec)
         if ($r.Code -eq 1 -and $r.Out -notmatch [regex]::Escape($fake)) { Pass 'smoke: secret scan finds a key and never prints it' } else { Fail "smoke: secret scan misbehaved: $($r.Out)" }
-        $r = Run (Join-Path $root '.claude\skills\sdf-review\scripts\audit-deps.ps1') @('-Path', $sec)
+        $r = Run (Join-Path $root '.claude\skills\vlsit-sdf-review\scripts\audit-deps.ps1') @('-Path', $sec)
         if ($r.Code -eq 0 -and $r.Out -match 'No dependency manifests') { Pass 'smoke: dependency audit reports an empty folder honestly' } else { Fail "smoke: dependency audit: $($r.Out)" }
         [System.IO.File]::WriteAllText("$sec\go.mod", "module x`n", $utf8)
-        $r = Run (Join-Path $root '.claude\skills\sdf-review\scripts\audit-deps.ps1') @('-Path', $sec)
+        $r = Run (Join-Path $root '.claude\skills\vlsit-sdf-review\scripts\audit-deps.ps1') @('-Path', $sec)
         if ($r.Code -in 0, 1, 3) { Pass "smoke: dependency audit handles go.mod (exit $($r.Code); 3 means the tool is not installed, which is reported as not audited)" } else { Fail "smoke: dependency audit error: $($r.Out)" }
 
         # the real library: registered files unchanged, self-tests pass, every script passes lint with its declared flags
-        $realLib = Join-Path $root '.claude\skills\sdf-flow\scripts\sdf-library.ps1'
+        $realLib = Join-Path $root '.claude\skills\vlsit-sdf-flow\scripts\sdf-library.ps1'
         $r = Run $realLib @('-Action', 'Check')
         if ($r.Code -eq 0) { Pass 'library: every registered script still has its recorded SHA-256' } else { Fail "library: integrity check failed: $($r.Out)" }
         $r = Run $realLib @('-Action', 'Test')
         if ($r.Code -eq 0) { Pass 'library: the self-tests of the registered scripts pass' } else { Fail "library: self-tests failed: $($r.Out)" }
-        $idx = Read-Text (Join-Path $root '.claude\skills\sdf-flow\library\index.json') | ConvertFrom-Json
+        $idx = Read-Text (Join-Path $root '.claude\skills\vlsit-sdf-flow\library\index.json') | ConvertFrom-Json
         foreach ($e in @($idx.entries)) {
-            $la = @('-Action', 'Lint', '-Path', (Join-Path $root ('.claude\skills\sdf-flow\library\scripts\' + $e.file)))
+            $la = @('-Action', 'Lint', '-Path', (Join-Path $root ('.claude\skills\vlsit-sdf-flow\library\scripts\' + $e.file)))
             if ($e.flags.network) { $la += '-Network' }; if ($e.flags.writesOutside) { $la += '-WritesOutside' }; if ($e.flags.destructive) { $la += '-Destructive' }; if ($e.flags.needsAdmin) { $la += '-NeedsAdmin' }
             $r = Run $realLib $la
             if ($r.Code -eq 0) { Pass "library: $($e.id) $($e.file) passes lint with its declared flags" } else { Fail "library: $($e.id) $($e.file) fails lint: $($r.Out)" }
         }
 
-        # the library tool on a scratch copy of sdf-flow (both tool trees), never on the real library
+        # the library tool on a scratch copy of vlsit-sdf-flow (both tool trees), never on the real library
         $lroot = Join-Path $tmp 'libtest'
-        $cl = Join-Path $lroot '.claude\skills\sdf-flow'; $ag = Join-Path $lroot '.agents\skills\sdf-flow'
-        foreach ($d in @($cl, $ag)) { [void](New-Item -ItemType Directory -Path $d -Force); Copy-Item -Path (Join-Path $root '.claude\skills\sdf-flow\*') -Destination $d -Recurse -Force }
+        $cl = Join-Path $lroot '.claude\skills\vlsit-sdf-flow'; $ag = Join-Path $lroot '.agents\skills\vlsit-sdf-flow'
+        foreach ($d in @($cl, $ag)) { [void](New-Item -ItemType Directory -Path $d -Force); Copy-Item -Path (Join-Path $root '.claude\skills\vlsit-sdf-flow\*') -Destination $d -Recurse -Force }
         $L = Join-Path $cl 'scripts\sdf-library.ps1'
         $goodSrc = "<#`n.SYNOPSIS`n    Smoke script.`n#>`nparam([switch]`$Selftest)`nif (`$Selftest) { 'SELFTEST PASS'; exit 0 }`n'hello'`n"
         $good = Join-Path $tmp 'good-tool.ps1'; [System.IO.File]::WriteAllText($good, $goodSrc, $utf8)
@@ -272,8 +302,8 @@ if (-not $SkipSmoke) {
         $r = Run $L @('-Action', 'Find', '-Query', 'smoke hello')
         $r2 = Run $L @('-Action', 'Find', '-Query', 'zzzz nothing here')
         if ($r.Code -eq 0 -and $r.Out -match 'LIB-003' -and $r2.Code -eq 1) { Pass 'library: find returns matches and reports a miss' } else { Fail "library: find: $($r.Out) / $($r2.Out)" }
-        $dest = Join-Path $tmp 'otherroot\.claude\skills\sdf-flow'
-        [void](New-Item -ItemType Directory -Path $dest -Force); Copy-Item -Path (Join-Path $root '.claude\skills\sdf-flow\*') -Destination $dest -Recurse -Force
+        $dest = Join-Path $tmp 'otherroot\.claude\skills\vlsit-sdf-flow'
+        [void](New-Item -ItemType Directory -Path $dest -Force); Copy-Item -Path (Join-Path $root '.claude\skills\vlsit-sdf-flow\*') -Destination $dest -Recurse -Force
         $r = Run $L @('-Action', 'Export', '-Id', 'LIB-003', '-Dest', $dest)
         $r2 = Run (Join-Path $dest 'scripts\sdf-library.ps1') @('-Action', 'Check')
         if ($r.Code -eq 0 -and $r2.Code -eq 0 -and (Test-Path -LiteralPath (Join-Path $dest 'library\scripts\good-tool.ps1'))) { Pass 'library: a script is exported to another copy of the skills and verifies there' } else { Fail "library: export: $($r.Out) / $($r2.Out)" }
@@ -283,9 +313,9 @@ if (-not $SkipSmoke) {
 
         # memory measurement of a short-lived helper
         $ps = Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'
-        $r = Run (Join-Path $root '.claude\skills\sdf-build\scripts\measure-memory.ps1') @('-Launch', $ps, '-LaunchArguments', '-NoProfile -Command Start-Sleep 20', '-Seconds', '2', '-IntervalSeconds', '1', '-BudgetMB', '500')
+        $r = Run (Join-Path $root '.claude\skills\vlsit-sdf-build\scripts\measure-memory.ps1') @('-Launch', $ps, '-LaunchArguments', '-NoProfile -Command Start-Sleep 20', '-Seconds', '2', '-IntervalSeconds', '1', '-BudgetMB', '500')
         if ($r.Code -eq 0 -and $r.Out -match 'WITHIN BUDGET') { Pass 'smoke: measure-memory measures a process and stops it' } else { Fail "smoke: measure-memory: $($r.Out)" }
-        $r = Run (Join-Path $root '.claude\skills\sdf-build\scripts\measure-memory.ps1') @('-Launch', $ps, '-LaunchArguments', '-NoProfile -Command Start-Sleep 20', '-Seconds', '2', '-IntervalSeconds', '1', '-BudgetMB', '1')
+        $r = Run (Join-Path $root '.claude\skills\vlsit-sdf-build\scripts\measure-memory.ps1') @('-Launch', $ps, '-LaunchArguments', '-NoProfile -Command Start-Sleep 20', '-Seconds', '2', '-IntervalSeconds', '1', '-BudgetMB', '1')
         if ($r.Code -eq 2 -and $r.Out -match 'OVER BUDGET') { Pass 'smoke: measure-memory reports an over-budget result with exit code 2' } else { Fail "smoke: over-budget case: $($r.Out)" }
     }
     finally { Remove-Item -LiteralPath $tmp -Recurse -Force -ErrorAction SilentlyContinue }

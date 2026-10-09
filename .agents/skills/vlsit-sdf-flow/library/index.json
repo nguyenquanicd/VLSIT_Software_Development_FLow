@@ -1,0 +1,95 @@
+{
+    "version":  1,
+    "entries":  [
+                    {
+                        "id":  "LIB-001",
+                        "file":  "backup-folder.ps1",
+                        "version":  "1.0.1",
+                        "purpose":  "Timestamped zip backup of a folder (for example application data) before a migration or risky change",
+                        "steps":  [
+                                      "5",
+                                      "7"
+                                  ],
+                        "platforms":  [
+                                          "windows"
+                                      ],
+                        "tags":  [
+                                     "backup",
+                                     "migration",
+                                     "data",
+                                     "zip"
+                                 ],
+                        "test":  "-Selftest",
+                        "flags":  {
+                                      "network":  false,
+                                      "writesOutside":  false,
+                                      "destructive":  false,
+                                      "needsAdmin":  false
+                                  },
+                        "sha256":  "ca6b1ea03024e2f6f492b1765534c4c7c8d161875e6ef4ebc007afcea356dd45",
+                        "added":  "2026-10-09",
+                        "updated":  "2026-10-09",
+                        "source":  "VLSIT_Q3VNLaw_Chat_Bot",
+                        "approvedBy":  "initial seed by the repository author, 2026-10-09",
+                        "history":  [
+                                        {
+                                            "version":  "1.0.0",
+                                            "date":  "2026-10-09",
+                                            "note":  "added",
+                                            "approvedBy":  "initial seed by the repository author, 2026-10-09"
+                                        },
+                                        {
+                                            "version":  "1.0.1",
+                                            "date":  "2026-10-09",
+                                            "note":  "updated",
+                                            "approvedBy":  "user request, 2026-10-09: add the author information to the shared files"
+                                        }
+                                    ]
+                    },
+                    {
+                        "id":  "LIB-002",
+                        "file":  "artifact-manifest.ps1",
+                        "version":  "1.0.1",
+                        "purpose":  "Markdown table of release files with size and SHA-256, for the release candidate record",
+                        "steps":  [
+                                      "7"
+                                  ],
+                        "platforms":  [
+                                          "windows"
+                                      ],
+                        "tags":  [
+                                     "release",
+                                     "hash",
+                                     "sha256",
+                                     "manifest",
+                                     "artifacts"
+                                 ],
+                        "test":  "-Selftest",
+                        "flags":  {
+                                      "network":  false,
+                                      "writesOutside":  false,
+                                      "destructive":  false,
+                                      "needsAdmin":  false
+                                  },
+                        "sha256":  "254519ac4bbc6c24546134f3c879d0674b75b7de8ae5cb355f014c6e25a6ab2d",
+                        "added":  "2026-10-09",
+                        "updated":  "2026-10-09",
+                        "source":  "VLSIT_Q3VNLaw_Chat_Bot",
+                        "approvedBy":  "initial seed by the repository author, 2026-10-09",
+                        "history":  [
+                                        {
+                                            "version":  "1.0.0",
+                                            "date":  "2026-10-09",
+                                            "note":  "added",
+                                            "approvedBy":  "initial seed by the repository author, 2026-10-09"
+                                        },
+                                        {
+                                            "version":  "1.0.1",
+                                            "date":  "2026-10-09",
+                                            "note":  "updated",
+                                            "approvedBy":  "user request, 2026-10-09: add the author information to the shared files"
+                                        }
+                                    ]
+                    }
+                ]
+}

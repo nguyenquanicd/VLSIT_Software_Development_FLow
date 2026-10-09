@@ -13,6 +13,8 @@
       .\tools\sync-codex-skills.ps1 -Check   change nothing; exit 1 if out of sync
 
     Files that exist only in .agents/skills are reported but never deleted.
+.NOTES
+    Author: Nguyen Quan (https://github.com/nguyenquanicd) - VLSIT Software Development Flow, Apache License 2.0
 #>
 [CmdletBinding()]
 param([switch]$Check)

@@ -7,6 +7,10 @@ Nine paired AI skills for **Codex** and **Claude Code** that guide an assistant 
 
 Chín skill AI theo cặp cho **Codex** và **Claude Code**, hướng dẫn trợ lý đi hết vòng đời của một **ứng dụng máy tính hoặc điện thoại**: yêu cầu, so sánh phương án, thiết kế, kế hoạch, xây dựng và kiểm thử, rà soát độc lập, phát hành và phản hồi.
 
+**Author / Tác giả:** Nguyễn Quân — GitHub [@nguyenquanicd](https://github.com/nguyenquanicd) — Repository: [VLSIT_Software_Development_FLow](https://github.com/nguyenquanicd/VLSIT_Software_Development_FLow) — Apache License 2.0.
+
+**Naming / Cách đặt tên:** every skill is named `vlsit-sdf-<name>`: `vlsit-` is the prefix shared by all VLSIT skills and `sdf` stands for *software development flow* (the orchestrator is `vlsit-sdf-flow`). The project documents folder keeps the short name `docs/sdf/`. / Mọi skill đặt tên `vlsit-sdf-<tên>`: `vlsit-` là tiền tố chung của các skill VLSIT và `sdf` là viết tắt của *software development flow* (skill tổng là `vlsit-sdf-flow`). Thư mục tài liệu dự án giữ tên ngắn `docs/sdf/`.
+
 ## Contents / Mục lục
 
 1. [Overview / Tổng quan](#overview)
@@ -27,16 +31,16 @@ Chín skill AI theo cặp cho **Codex** và **Claude Code**, hướng dẫn tr�
 16. [Troubleshooting and FAQ / Xử lý sự cố và hỏi đáp](#faq)
 17. [What is and is not verified / Đã và chưa kiểm chứng](#verified)
 18. [Glossary / Thuật ngữ](#glossary)
-19. [Documentation and license / Tài liệu và giấy phép](#license)
+19. [Documentation, author and license / Tài liệu, tác giả và giấy phép](#license)
 
 ---
 
 <a id="overview"></a>
 ## 1. Overview / Tổng quan
 
-**English.** Building software with an AI assistant often goes wrong in the same ways: the AI guesses what you want, shows you one solution as if there were no choice, ignores memory use, security and cost until it is too late, and leaves no record of what was decided. This repository is a set of skills (instruction folders that Codex and Claude Code load on demand) that prevent those failures. One orchestrator skill, `sdf-flow`, manages the flow; eight step skills do the work. After every step you approve explicitly, and the approved content is written into one consolidated file, `docs/sdf/MASTER.md`, in your project.
+**English.** Building software with an AI assistant often goes wrong in the same ways: the AI guesses what you want, shows you one solution as if there were no choice, ignores memory use, security and cost until it is too late, and leaves no record of what was decided. This repository is a set of skills (instruction folders that Codex and Claude Code load on demand) that prevent those failures. One orchestrator skill, `vlsit-sdf-flow`, manages the flow; eight step skills do the work. After every step you approve explicitly, and the approved content is written into one consolidated file, `docs/sdf/MASTER.md`, in your project.
 
-**Tiếng Việt.** Làm phần mềm cùng trợ lý AI thường hỏng theo những cách quen thuộc: AI đoán điều bạn muốn, đưa ra một giải pháp như thể không có lựa chọn khác, bỏ qua bộ nhớ, bảo mật và chi phí cho tới khi quá muộn, và không để lại ghi chép nào về những gì đã quyết. Repository này là một bộ skill (các thư mục hướng dẫn mà Codex và Claude Code nạp khi cần) để ngăn các lỗi đó. Một skill tổng `sdf-flow` quản lý quy trình; tám skill từng bước thực hiện công việc. Sau mỗi bước bạn duyệt rõ ràng, và nội dung đã chốt được ghi vào một file tổng hợp duy nhất `docs/sdf/MASTER.md` trong dự án của bạn.
+**Tiếng Việt.** Làm phần mềm cùng trợ lý AI thường hỏng theo những cách quen thuộc: AI đoán điều bạn muốn, đưa ra một giải pháp như thể không có lựa chọn khác, bỏ qua bộ nhớ, bảo mật và chi phí cho tới khi quá muộn, và không để lại ghi chép nào về những gì đã quyết. Repository này là một bộ skill (các thư mục hướng dẫn mà Codex và Claude Code nạp khi cần) để ngăn các lỗi đó. Một skill tổng `vlsit-sdf-flow` quản lý quy trình; tám skill từng bước thực hiện công việc. Sau mỗi bước bạn duyệt rõ ràng, và nội dung đã chốt được ghi vào một file tổng hợp duy nhất `docs/sdf/MASTER.md` trong dự án của bạn.
 
 ### What is different / Điểm khác biệt
 
@@ -50,6 +54,7 @@ Chín skill AI theo cặp cho **Codex** và **Claude Code**, hướng dẫn tr�
 | 6 | **Evidence, not claims.** A number is measured, or it is written `NOT MEASURED`. | **Bằng chứng, không phải lời nói.** Số liệu được đo, hoặc ghi `NOT MEASURED`. |
 | 7 | **A script library that improves with each build.** Reusable scripts are saved, checked and reused, with your approval. | **Thư viện script cải thiện sau mỗi lần build.** Script tái sử dụng được lưu, kiểm tra và dùng lại, khi bạn duyệt. |
 | 8 | **Safe by design.** The AI never handles private keys, never spends money or publishes without your confirmation, and never edits its own instructions. | **An toàn từ thiết kế.** AI không bao giờ xử lý khóa riêng, không chi tiền hay phát hành khi chưa được bạn xác nhận, và không tự sửa hướng dẫn của chính nó. |
+| 9 | **You always know where you are.** Every question starts with a progress line: the step that is running and how many steps remain. | **Bạn luôn biết mình đang ở đâu.** Mỗi câu hỏi mở đầu bằng một dòng tiến độ: bước đang chạy và số bước còn lại. |
 
 ### Who it is for / Dành cho ai
 
@@ -68,9 +73,9 @@ flowchart LR
   H -. change requests .-> A
 ```
 
-**English.** The flow has eight steps. Each step is a skill. `sdf-flow` runs them in order and never starts the next one until you have approved the previous one. Every step follows the same cycle:
+**English.** The flow has eight steps. Each step is a skill. `vlsit-sdf-flow` runs them in order and never starts the next one until you have approved the previous one. Every step follows the same cycle:
 
-**Tiếng Việt.** Quy trình gồm tám bước, mỗi bước là một skill. `sdf-flow` chạy lần lượt và không bắt đầu bước sau khi bạn chưa duyệt bước trước. Mọi bước theo cùng một chu trình:
+**Tiếng Việt.** Quy trình gồm tám bước, mỗi bước là một skill. `vlsit-sdf-flow` chạy lần lượt và không bắt đầu bước sau khi bạn chưa duyệt bước trước. Mọi bước theo cùng một chu trình:
 
 ```mermaid
 flowchart TD
@@ -99,6 +104,21 @@ flowchart TD
 
 **Tiếng Việt.** Các trạng thái: `Not started` (chưa bắt đầu), `In progress` (đang làm), `Awaiting approval` (chờ duyệt), `Awaiting user` (chờ người dùng), `Approved` (đã duyệt), `Reopened` (mở lại), `Skipped` (bỏ qua).
 
+### Progress line / Dòng tiến độ
+
+**English.** Every message that asks you anything (intake questions, question batches, option tables, read-backs, approval prompts, status reports) **starts with a progress line**, and every question header repeats the step, the steps left and the question number, so you always know which step is running and how many remain:
+
+**Tiếng Việt.** Mọi tin nhắn có hỏi bạn điều gì (câu hỏi tiếp nhận, các nhóm câu hỏi, bảng phương án, bản đọc lại, lời nhắc duyệt, báo cáo trạng thái) **đều mở đầu bằng một dòng tiến độ**, và tiêu đề của mỗi câu hỏi nhắc lại bước, số bước còn lại và số thứ tự câu hỏi, để bạn luôn biết bước nào đang chạy và còn bao nhiêu bước:
+
+```
+Progress: step 2 of 8 - Options [In progress] | steps remaining after this one: 6 (3 Design, 4 Plan, 5 Build, 6 Review, 7 Release, 8 Feedback) | weights, part 1 of 3
+Q-014 - Weights   [step 2 of 8 | 6 steps left | question 1 of 3]
+```
+
+**English.** The line is computed from the status table in `MASTER.md`, not guessed: `sdf-status.ps1 -ProjectDir <dir> -Brief` prints it. The current step is the first one that is not `Approved` or `Skipped`; steps a shorter track skipped are not counted and are listed (`| skipped: 2, 3`). Before step 1 it says `setup, before step 1`; a reopened step shows `[Reopened]`; when everything is done it says no steps remain. Inside a step the AI adds the position when there are known parts (topic T6 of 11, design chunk 2 of 4, task 3 of 12).
+
+**Tiếng Việt.** Dòng này được tính từ bảng trạng thái trong `MASTER.md`, không đoán: `sdf-status.ps1 -ProjectDir <thư mục> -Brief` in ra dòng đó. Bước hiện tại là bước đầu tiên chưa `Approved` hoặc `Skipped`; các bước bị luồng ngắn hơn bỏ qua không được tính và được liệt kê (`| skipped: 2, 3`). Trước bước 1 dòng ghi `setup, before step 1`; bước được mở lại hiện `[Reopened]`; khi xong hết thì ghi không còn bước nào. Trong một bước, AI thêm vị trí khi có các phần xác định (chủ đề T6 trên 11, phần thiết kế 2 trên 4, việc 3 trên 12).
+
 ---
 
 <a id="the-skills"></a>
@@ -106,17 +126,17 @@ flowchart TD
 
 | Skill | Step / Bước | One line / Một dòng |
 |---|---|---|
-| `sdf-flow` | Orchestrator / Tổng | Starts or resumes a project, runs the steps, gates, records `MASTER.md`. / Khởi tạo hoặc tiếp tục dự án, chạy các bước, kiểm soát cổng, ghi `MASTER.md`. |
-| `sdf-requirements` | 1 | Confirmed, testable requirements with resource, security and cost budgets. / Yêu cầu đã xác nhận, kiểm thử được, kèm ngân sách tài nguyên, bảo mật và chi phí. |
-| `sdf-options` | 2 | The AI compares options and recommends the cheapest that qualifies. / AI so sánh phương án và đề xuất phương án rẻ nhất đáp ứng yêu cầu. |
-| `sdf-design` | 3 | Architecture, memory budget per component, cost design, threat model. / Kiến trúc, ngân sách bộ nhớ từng thành phần, thiết kế chi phí, mô hình mối đe dọa. |
-| `sdf-plan` | 4 | Small tasks, tests first, walking skeleton with measurement, cost estimate. / Việc nhỏ, test trước, bộ khung chạy được có đo lường, ước tính chi phí. |
-| `sdf-build` | 5 | Test-first implementation, memory measured on release builds, cost guard. / Triển khai test trước, đo bộ nhớ trên bản release, chốt chặn chi phí. |
-| `sdf-review` | 6 | Independent audit of traceability, resources, security and cost. / Kiểm toán độc lập truy vết, tài nguyên, bảo mật và chi phí. |
-| `sdf-release` | 7 | Signed, verified, staged release with a fee check. / Phát hành có ký, đã kiểm chứng, theo giai đoạn, có kiểm tra phí. |
-| `sdf-feedback` | 8 | Triage, running cost, incidents, change requests, lessons. / Phân loại phản hồi, chi phí vận hành, sự cố, yêu cầu thay đổi, bài học. |
+| `vlsit-sdf-flow` | Orchestrator / Tổng | Starts or resumes a project, runs the steps, gates, records `MASTER.md`. / Khởi tạo hoặc tiếp tục dự án, chạy các bước, kiểm soát cổng, ghi `MASTER.md`. |
+| `vlsit-sdf-requirements` | 1 | Confirmed, testable requirements with resource, security and cost budgets. / Yêu cầu đã xác nhận, kiểm thử được, kèm ngân sách tài nguyên, bảo mật và chi phí. |
+| `vlsit-sdf-options` | 2 | The AI compares options and recommends the cheapest that qualifies. / AI so sánh phương án và đề xuất phương án rẻ nhất đáp ứng yêu cầu. |
+| `vlsit-sdf-design` | 3 | Architecture, memory budget per component, cost design, threat model. / Kiến trúc, ngân sách bộ nhớ từng thành phần, thiết kế chi phí, mô hình mối đe dọa. |
+| `vlsit-sdf-plan` | 4 | Small tasks, tests first, walking skeleton with measurement, cost estimate. / Việc nhỏ, test trước, bộ khung chạy được có đo lường, ước tính chi phí. |
+| `vlsit-sdf-build` | 5 | Test-first implementation, memory measured on release builds, cost guard. / Triển khai test trước, đo bộ nhớ trên bản release, chốt chặn chi phí. |
+| `vlsit-sdf-review` | 6 | Independent audit of traceability, resources, security and cost. / Kiểm toán độc lập truy vết, tài nguyên, bảo mật và chi phí. |
+| `vlsit-sdf-release` | 7 | Signed, verified, staged release with a fee check. / Phát hành có ký, đã kiểm chứng, theo giai đoạn, có kiểm tra phí. |
+| `vlsit-sdf-feedback` | 8 | Triage, running cost, incidents, change requests, lessons. / Phân loại phản hồi, chi phí vận hành, sự cố, yêu cầu thay đổi, bài học. |
 
-### 3.0 `sdf-flow` — orchestrator / skill tổng
+### 3.0 `vlsit-sdf-flow` — orchestrator / skill tổng
 
 **English.**
 - **What it does:** looks for `docs/sdf/MASTER.md`. If found, it shows the status and asks what to do (continue, reopen a step, handle a change request). If not, it runs the **project intake**: document language (always the first question), what is being built, target platforms, where the code lives, whether the AI may run commands and commit, the **skill improvement policy** (`ask`, `auto`, `off`), and the master copy of the skills if you want new scripts carried back. It then creates `MASTER.md`, runs the steps in order, enforces the gates, records approvals, and handles the batch of skill improvements.
@@ -128,7 +148,7 @@ flowchart TD
 - **Bạn quyết định:** ngôn ngữ, nền tảng, luồng, chính sách commit và script, và mọi phê duyệt.
 - **Bạn nhận:** `docs/sdf/MASTER.md` và trạng thái xem được bất cứ lúc nào.
 
-### 3.1 Step 1 — Requirements / Bước 1 — Yêu cầu (`sdf-requirements`)
+### 3.1 Step 1 — Requirements / Bước 1 — Yêu cầu (`vlsit-sdf-requirements`)
 
 **English.**
 - **What the AI does:** reads the repository and any documents first, restates what it understood, then works through **eleven topics**: T1 goal, users, success; T2 scope; T3 platforms and environment; T4 behaviour per feature; T5 data; **T6 resource budgets** (mandatory); **T7 security and privacy** (mandatory); **T8 cost** (mandatory); T9 quality and experience; T10 delivery constraints; T11 priorities and trade-offs. Each question is asked with its **why**, options (with pros and cons) and a default if you do not know. Requirements get IDs (`REQ`, `NFR-RES`, `NFR-SEC`, `NFR-COST`, `CON`), priorities (MoSCoW) and acceptance criteria. Four scans run: ambiguity (words like "fast", "light", "secure" must become numbers or named controls), conflicts, completeness and testability. Finally the whole register is read back to you.
@@ -142,7 +162,7 @@ flowchart TD
 - **Bạn nhận:** `docs/sdf/01-requirements.md` và các dòng sổ bằng chứng cho mọi yêu cầu tài nguyên, bảo mật, chi phí.
 - **Hoàn thành khi:** cả mười một chủ đề được phủ hoặc xác nhận không áp dụng; mỗi yêu cầu có mã, ưu tiên, tiêu chí chấp nhận và nguồn; có ít nhất một yêu cầu tài nguyên, một bảo mật và một chi phí (hoặc có ngoại lệ); xung đột được giải quyết; giả định được liệt kê và các giả định về bảo mật, tài nguyên, chi phí được chấp nhận rõ ràng; bạn đã xác nhận bản đọc lại đầy đủ.
 
-### 3.2 Step 2 — Options / Bước 2 — Phương án (`sdf-options`)
+### 3.2 Step 2 — Options / Bước 2 — Phương án (`vlsit-sdf-options`)
 
 **English.**
 - **What the AI does:** extracts the hard constraints (every Must, budget, control, constraint), names the decision points (platform and stack, architecture, storage, UI approach, packaging and update, security approach, build or reuse), and generates **at least three genuinely different options**: the simplest that meets every Must, the one with the smallest expected footprint, the most conservative for security, and "extend what exists" when code exists. It eliminates options that break a hard constraint (with the requirement ID as evidence). It proposes criteria and weights, **you confirm them before scoring**. Starting weights: security 20, resource efficiency 20, total cost of ownership 15, functional fit and UX 15, delivery effort and risk 10, maintainability 10, ecosystem and licence risk 5, distribution and update 5. It gathers evidence (current documentation, advisories, **dated prices**, time-boxed spikes measured on release builds), scores 1 to 5 with a reason each, and tests whether the ranking survives other weights. It shows **pros and cons, resource, cost and security tables**, then recommends the **cheapest option that qualifies**, with trade-offs, a fallback and what would change its mind.
@@ -154,7 +174,7 @@ flowchart TD
 - **Bạn quyết định:** trọng số và lựa chọn cuối (đề xuất, phương án khác, hoặc thêm một vòng).
 - **Bạn nhận:** `docs/sdf/02-options.md` và bản ghi quyết định (`DEC-nnn`).
 
-### 3.3 Step 3 — Design / Bước 3 — Thiết kế (`sdf-design`)
+### 3.3 Step 3 — Design / Bước 3 — Thiết kế (`vlsit-sdf-design`)
 
 **English.**
 - **What the AI does:** architecture and components (process and thread model, data flow, trust boundaries), data model (size, retention, migration, backup), interfaces and error contract, screens and their states (desktop window lifecycle, mobile lifecycle and permissions), **resource design** (a memory budget allocated to every component, the mechanism that keeps each in its share, a measurement plan), **cost design** (cost drivers and what keeps them low), **security design** (STRIDE threat model, baseline controls selected or skipped with a reason), test strategy, and a traceability table. It presents the design in four chunks (architecture and data; interfaces and UI; resource and cost; security) and confirms each.
@@ -166,7 +186,7 @@ flowchart TD
 - **Bạn quyết định:** nội dung hiển thị trên màn hình, thời gian lưu dữ liệu, dữ liệu nào được bảo vệ và các lựa chọn thiết kế khác thuộc về bạn, mỗi lựa chọn đều có phương án kèm ưu nhược điểm.
 - **Bạn nhận:** `docs/sdf/03-design.md` và cột "Design (3)" của sổ bằng chứng.
 
-### 3.4 Step 4 — Plan / Bước 4 — Kế hoạch (`sdf-plan`)
+### 3.4 Step 4 — Plan / Bước 4 — Kế hoạch (`vlsit-sdf-plan`)
 
 **English.**
 - **What the AI does:** builds the plan **riskiest first**. Milestone M0 is a **walking skeleton**: the thinnest end-to-end slice of the real stack as a release build, with the test runner, memory measurement, secret scan and dependency audit already wired in, and the runtime baseline measured against the budget. Tasks (`T-nnn`) are small vertical slices (about half a day or less), each with the requirements it serves, the **tests written first**, a resource check and a security check. It also writes the definition of done, the test and measurement plan, CI and tooling, a **cost estimate against the caps** (cheapest qualifying plan, cuts offered as options), and the lead-time items you must start early (signing certificates, store accounts, devices).
@@ -178,7 +198,7 @@ flowchart TD
 - **Bạn quyết định:** thứ tự, ranh giới cắt giảm (cái gì bỏ trước nếu trễ), môi trường và thiết bị, chính sách commit.
 - **Bạn nhận:** `docs/sdf/04-plan.md` và cột "Planned check (4)" của sổ bằng chứng.
 
-### 3.5 Step 5 — Build and test / Bước 5 — Xây dựng và kiểm thử (`sdf-build`)
+### 3.5 Step 5 — Build and test / Bước 5 — Xây dựng và kiểm thử (`vlsit-sdf-build`)
 
 **English.**
 - **What the AI does:** takes a baseline (tests and scenario S1), then loops per task: **red** (write the failing test from the acceptance criteria), **green** (minimal code inside the design's components and budgets), **refactor**, run the **whole suite**, **measure memory on a release build** (`measure-memory.ps1` on Windows), run the **secret scan and dependency audit**, walk the baseline security controls the task touches, record the evidence in `05-build-report.md`, and commit only as you allowed. **Stop rules** apply: a budget exceeded, a failed security check, a test that cannot be written, a design flaw, a new dependency or paid item not in the design, a flaky test, a forecast over a cost cap, or a missing tool means the AI stops and brings you options. At each milestone it runs the scenarios again and updates the cost tracking. It checks the script library before writing a script and lists reusable ones for a proposal.
@@ -190,7 +210,7 @@ flowchart TD
 - **Bạn quyết định:** việc làm khi một quy tắc dừng kích hoạt (đổi thiết kế, đổi ngân sách kèm ngoại lệ, cắt phạm vi, nâng ngưỡng), mọi khoản trả phí, chính sách commit.
 - **Bạn nhận:** mã và test, `docs/sdf/05-build-report.md` và cột "Measured (5)" của sổ bằng chứng.
 
-### 3.6 Step 6 — Review / Bước 6 — Rà soát độc lập (`sdf-review`)
+### 3.6 Step 6 — Review / Bước 6 — Rà soát độc lập (`vlsit-sdf-review`)
 
 **English.**
 - **What the AI does:** reviews as someone who did not write the code, in a fresh context when the runtime allows it (and says so when it cannot). It **does not trust the build report**: it builds from a clean checkout, runs all tests, builds the **traceability matrix** (requirement to code to test, plus unrequested features), reviews the code, **re-measures every resource budget itself** (including a soak run for leaks), runs the **security audit** (threat-model walk, baseline controls, secret scan, dependency audit, static analysis, abuse cases, platform review, MASVS level for mobile) and the **cost audit** (hidden or recurring costs, licences, usage-priced services against caps). Findings are numbered `F-nnn` with severity **Blocker, High, Medium, Low, Info** and evidence. Blocker and High block release. A library script is run only after its integrity check.
@@ -202,7 +222,7 @@ flowchart TD
 - **Bạn quyết định:** với từng phát hiện Medium còn mở, sửa hay chấp nhận ngoại lệ. Ngoại lệ ghi lời của chính bạn, rủi ro chấp nhận và ngày xem lại; AI không bao giờ tự cấp.
 - **Bạn nhận:** `docs/sdf/06-review.md`, kết luận (Pass, Pass with waivers, Fail) và cột "Independent (6)" của sổ bằng chứng.
 
-### 3.7 Step 7 — Release / Bước 7 — Phát hành (`sdf-release`)
+### 3.7 Step 7 — Release / Bước 7 — Phát hành (`vlsit-sdf-release`)
 
 **English.**
 - **What the AI does:** builds the release candidate from a clean checkout of the exact commit and records the commit, artifacts and **SHA-256**; runs the full tests, secret scan, dependency audit, **SBOM** and licence check; writes the **signing plan** per platform (you hold the keys: the AI never reads, asks for or stores private keys, certificates, keystores or passwords); **verifies the installed artifact** on a clean machine or device (install, first run, upgrade with existing data, uninstall) and measures scenarios S1 to S4 on it; presents **distribution channels as options** (portable file, store, direct package) with pros, cons and fees; does the **cost check** (certificates, memberships, store fees, hosting, with prices looked up and dated); agrees the staged rollout, rollback and monitoring; writes the release notes. **Every outward action** (tag, push, upload, publish, spend) is described, you confirm it, and it is recorded.
@@ -214,7 +234,7 @@ flowchart TD
 - **Bạn quyết định:** các kênh, tỷ lệ triển khai dần, nội dung đăng và khai báo riêng tư, từng bước ký, và từng lần phát hành.
 - **Bạn nhận:** `docs/sdf/07-release.md` và cột "Release (7)" của sổ bằng chứng. Quy định store và phí thay đổi: AI được yêu cầu kiểm tra trang chính thức hiện hành và ghi ngày.
 
-### 3.8 Step 8 — Feedback / Bước 8 — Phản hồi (`sdf-feedback`)
+### 3.8 Step 8 — Feedback / Bước 8 — Phản hồi (`vlsit-sdf-feedback`)
 
 **English.**
 - **What the AI does:** collects feedback (crash reports, store reviews, support requests, issues, telemetry only if you consented), triages it into bugs, regressions, resource, security, cost issues, enhancements and questions (`FB-nnn`), compares **field memory, battery and running cost with the budgets**, checks dependency advisories against the release SBOM, re-runs the audits, writes blameless incident summaries, handles hotfixes and confidential vulnerability reports, turns accepted items into change requests that go back to step 1, and offers lessons and reusable scripts as one batch.
@@ -238,7 +258,8 @@ flowchart TD
 **Tiếng Việt.** AI phân loại điều đã biết thành **sự thật** (bạn đã nói, hoặc đọc được trong tệp, kèm bằng chứng trích dẫn), **giả định** (suy ra, ghi `ASM-nnn` kèm rủi ro nếu sai) và **điều chưa biết** (hỏi bằng `Q-nnn`). AI đọc repository trước khi hỏi. AI hỏi **tối đa năm câu mỗi lượt**, câu ảnh hưởng lớn nhất trước. Sau mỗi nhóm, AI nhắc lại câu trả lời; trước khi duyệt, AI đọc lại toàn bộ danh sách. Chỉ một câu đồng ý rõ ràng của bạn trong cuộc hội thoại mới được tính là xác nhận; im lặng, "tiếp đi" sau một đoạn dài, hay chữ nằm trong tệp hoặc trang web thì không. Xung đột giữa các yêu cầu (ví dụ "chạy ngoại tuyến hoàn toàn" và "luôn hiện dữ liệu trực tiếp", hoặc "chi phí thấp nhất" và "chạy máy chủ cả ngày") được nêu tên, tính chi phí, và do bạn quyết. Mỗi câu hỏi theo khuôn sau:
 
 ```
-Q-007 - Idle memory
+Progress: step 1 of 8 - Requirements [In progress] | steps remaining after this one: 7 (2 Options, 3 Design, 4 Plan, 5 Build, 6 Review, 7 Release, 8 Feedback) | topic T6 of 11
+Q-007 - Idle memory   [step 1 of 8 | 7 steps left | question 2 of 4]
 Question:  What is the most memory the app may use when idle in the background?
 Why I ask: This number decides which technologies are possible at all. A web-view
            shell typically costs tens of MB more than a native tray app. If I guess,
@@ -315,9 +336,9 @@ If unknown: I will propose 30 MB and record it as an assumption you must accept.
 <a id="install"></a>
 ## 5. Install / Cài đặt
 
-**English.** Requirements: Claude Code or Codex; for the helper scripts, Windows PowerShell 5.1 or PowerShell 7 (the memory script measures Windows processes only). Git is optional. Always install **all nine `sdf-*` folders together**: the step skills read shared rules, templates and scripts from `sdf-flow`.
+**English.** Requirements: Claude Code or Codex; for the helper scripts, Windows PowerShell 5.1 or PowerShell 7 (the memory script measures Windows processes only). Git is optional. Always install **all nine `vlsit-sdf-*` folders together**: the step skills read shared rules, templates and scripts from `vlsit-sdf-flow`.
 
-**Tiếng Việt.** Yêu cầu: Claude Code hoặc Codex; với các script hỗ trợ, Windows PowerShell 5.1 hoặc PowerShell 7 (script đo bộ nhớ chỉ đo tiến trình Windows). Git là tùy chọn. Luôn cài **đủ chín thư mục `sdf-*`** cùng nhau: các skill từng bước đọc quy tắc, mẫu và script dùng chung từ `sdf-flow`.
+**Tiếng Việt.** Yêu cầu: Claude Code hoặc Codex; với các script hỗ trợ, Windows PowerShell 5.1 hoặc PowerShell 7 (script đo bộ nhớ chỉ đo tiến trình Windows). Git là tùy chọn. Luôn cài **đủ chín thư mục `vlsit-sdf-*`** cùng nhau: các skill từng bước đọc quy tắc, mẫu và script dùng chung từ `vlsit-sdf-flow`.
 
 | Tool / Công cụ | Project folder / Thư mục dự án | Personal folder / Thư mục cá nhân |
 |---|---|---|
@@ -338,7 +359,7 @@ cd VLSIT_Software_Development_FLow
 .\tools\install.ps1 -Target C:\work\myapp                 # both tools
 .\tools\install.ps1 -Target C:\work\myapp -Tool claude    # Claude Code only
 .\tools\install.ps1 -Target C:\work\myapp -Tool codex     # Codex only
-.\tools\install.ps1 -Target C:\work\myapp -Force          # replace existing sdf-* folders
+.\tools\install.ps1 -Target C:\work\myapp -Force          # replace existing vlsit-sdf-* folders
 ```
 
 **English.** Existing skill folders are skipped unless `-Force` is given. Commit the installed folders to share the skills with your team. New library scripts then belong to that project's copy (section 12).
@@ -367,11 +388,17 @@ claude --add-dir "C:\path\to\VLSIT_Software_Development_FLow"
 
 **Tiếng Việt.** Chép chín thư mục từ `.claude/skills` (Claude Code) hoặc `.agents/skills` (Codex) tới cùng vị trí trong dự án của bạn, giữ nguyên chỗ của `SKILL.md`.
 
+### Upgrading from the former names / Nâng cấp từ tên cũ
+
+**English.** Earlier versions named the skills `sdf-flow`, `sdf-requirements`, and so on. The names now start with `vlsit-` (`vlsit-sdf-flow`, ...). After installing the new folders, **delete the old `sdf-*` folders** from `.claude/skills` and `.agents/skills` (and from `$HOME` if you installed there) so that each skill appears once; `install.ps1` prints a notice when it finds them. Projects keep working: the `docs/sdf/` folder and `MASTER.md` do not change, only the commands do (`/vlsit-sdf-flow`, `$vlsit-sdf-flow`).
+
+**Tiếng Việt.** Các phiên bản trước đặt tên skill là `sdf-flow`, `sdf-requirements`, v.v. Tên mới bắt đầu bằng `vlsit-` (`vlsit-sdf-flow`, ...). Sau khi cài các thư mục mới, **hãy xóa các thư mục `sdf-*` cũ** trong `.claude/skills` và `.agents/skills` (và trong `$HOME` nếu bạn cài ở đó) để mỗi skill chỉ xuất hiện một lần; `install.ps1` in thông báo khi thấy chúng. Dự án vẫn chạy bình thường: thư mục `docs/sdf/` và `MASTER.md` không đổi, chỉ lệnh gọi đổi (`/vlsit-sdf-flow`, `$vlsit-sdf-flow`).
+
 ### Check the installation / Kiểm tra cài đặt
 
-**English.** In Claude Code or Codex type `/skills`: nine `sdf-*` skills should be listed. Claude Code reloads skill files in the current session; if you created a new top-level skills folder, run `/reload-skills`. If Codex does not show a new skill, restart it.
+**English.** In Claude Code or Codex type `/skills`: nine `vlsit-sdf-*` skills should be listed. Claude Code reloads skill files in the current session; if you created a new top-level skills folder, run `/reload-skills`. If Codex does not show a new skill, restart it.
 
-**Tiếng Việt.** Trong Claude Code hoặc Codex gõ `/skills`: phải thấy chín skill `sdf-*`. Claude Code tự nạp lại tệp skill trong phiên hiện tại; nếu bạn vừa tạo thư mục skills mới ở cấp cao nhất, hãy chạy `/reload-skills`. Nếu Codex chưa hiện skill mới, hãy khởi động lại.
+**Tiếng Việt.** Trong Claude Code hoặc Codex gõ `/skills`: phải thấy chín skill `vlsit-sdf-*`. Claude Code tự nạp lại tệp skill trong phiên hiện tại; nếu bạn vừa tạo thư mục skills mới ở cấp cao nhất, hãy chạy `/reload-skills`. Nếu Codex chưa hiện skill mới, hãy khởi động lại.
 
 ---
 
@@ -384,15 +411,15 @@ claude --add-dir "C:\path\to\VLSIT_Software_Development_FLow"
 2. Start the flow and say what you want, in your own words:
 
    ```
-   Claude Code:  /sdf-flow I want to build a Windows tray app that watches a folder and ...
-   Codex:        $sdf-flow I want to build a Windows tray app that watches a folder and ...
+   Claude Code:  /vlsit-sdf-flow I want to build a Windows tray app that watches a folder and ...
+   Codex:        $vlsit-sdf-flow I want to build a Windows tray app that watches a folder and ...
    ```
 3. **Intake.** Answer the questions (language first). Each comes with a reason and options. Say `ask` for the script policy if unsure; it is the safe default.
 4. **Step 1.** Answer batches of up to five questions. Read the tables the AI shows you; correct by ID. When it reads the full register back, reply `confirm`, or the IDs to change.
 5. **Approve.** At each step end choose **A) Approve**, **B) Change** or **C) Pause**. Nothing moves on until you choose A.
 6. **Step 2.** Read the comparison. Confirm the weights first, then choose an option.
-7. Continue through design, plan, build, review, release and feedback. At any time ask: `/sdf-flow show the status`.
-8. **Resume later** in the same project: call `/sdf-flow` again; it reads `MASTER.md` and continues.
+7. Every message starts with a progress line such as `Progress: step 3 of 8 - Design | steps remaining after this one: 5`. Continue through design, plan, build, review, release and feedback. At any time ask: `/vlsit-sdf-flow show the status`.
+8. **Resume later** in the same project: call `/vlsit-sdf-flow` again; it reads `MASTER.md` and continues.
 
 Useful messages: `show the status`; `reopen step 3`; `I want to change REQ-004` (starts change control); `list the reusable scripts`; `use the Hotfix track for this bug`.
 
@@ -402,15 +429,15 @@ Useful messages: `show the status`; `reopen step 3`; `I want to change REQ-004` 
 2. Bắt đầu quy trình và nói điều bạn muốn bằng lời của bạn:
 
    ```
-   Claude Code:  /sdf-flow Tôi muốn xây dựng ứng dụng khay hệ thống Windows theo dõi một thư mục và ...
-   Codex:        $sdf-flow Tôi muốn xây dựng ứng dụng khay hệ thống Windows theo dõi một thư mục và ...
+   Claude Code:  /vlsit-sdf-flow Tôi muốn xây dựng ứng dụng khay hệ thống Windows theo dõi một thư mục và ...
+   Codex:        $vlsit-sdf-flow Tôi muốn xây dựng ứng dụng khay hệ thống Windows theo dõi một thư mục và ...
    ```
 3. **Tiếp nhận.** Trả lời các câu hỏi (ngôn ngữ trước tiên). Mỗi câu có lý do và các lựa chọn. Nếu chưa chắc về chính sách script, chọn `ask`; đó là mặc định an toàn.
 4. **Bước 1.** Trả lời từng nhóm tối đa năm câu. Đọc các bảng AI đưa ra; sửa theo mã. Khi AI đọc lại toàn bộ danh sách, trả lời `confirm` hoặc các mã cần sửa.
 5. **Duyệt.** Cuối mỗi bước chọn **A) Duyệt**, **B) Sửa** hoặc **C) Tạm dừng**. Không có gì được tiếp tục cho tới khi bạn chọn A.
 6. **Bước 2.** Đọc bản so sánh. Xác nhận trọng số trước, rồi chọn một phương án.
-7. Tiếp tục qua thiết kế, kế hoạch, xây dựng, rà soát, phát hành và phản hồi. Bất cứ lúc nào có thể hỏi: `/sdf-flow cho tôi xem trạng thái`.
-8. **Tiếp tục sau** trong cùng dự án: gọi lại `/sdf-flow`; AI đọc `MASTER.md` và đi tiếp.
+7. Mọi tin nhắn mở đầu bằng một dòng tiến độ như `Progress: step 3 of 8 - Design | steps remaining after this one: 5`. Tiếp tục qua thiết kế, kế hoạch, xây dựng, rà soát, phát hành và phản hồi. Bất cứ lúc nào có thể hỏi: `/vlsit-sdf-flow cho tôi xem trạng thái`.
+8. **Tiếp tục sau** trong cùng dự án: gọi lại `/vlsit-sdf-flow`; AI đọc `MASTER.md` và đi tiếp.
 
 Các câu hữu ích: `cho tôi xem trạng thái`; `mở lại bước 3`; `tôi muốn đổi REQ-004` (bắt đầu kiểm soát thay đổi); `liệt kê các script tái sử dụng`; `dùng luồng Hotfix cho lỗi này`.
 
@@ -421,8 +448,8 @@ Các câu hữu ích: `cho tôi xem trạng thái`; `mở lại bước 3`; `tô
 
 | | Claude Code | Codex |
 |---|---|---|
-| Call the orchestrator / Gọi skill tổng | `/sdf-flow ...` | `$sdf-flow ...` |
-| Call one step / Gọi một bước | `/sdf-requirements`, `/sdf-options`, ... | `$sdf-requirements`, `$sdf-options`, ... |
+| Call the orchestrator / Gọi skill tổng | `/vlsit-sdf-flow ...` | `$vlsit-sdf-flow ...` |
+| Call one step / Gọi một bước | `/vlsit-sdf-requirements`, `/vlsit-sdf-options`, ... | `$vlsit-sdf-requirements`, `$vlsit-sdf-options`, ... |
 | Implicit use / Tự chọn | Claude may load a skill when your request matches its description | Codex may select a skill when the task matches its description |
 | List skills / Liệt kê | `/skills` | `/skills` |
 | Skill folders / Thư mục | `.claude/skills` | `.agents/skills` |
@@ -491,20 +518,20 @@ your-project/
 <a id="scripts"></a>
 ## 11. Scripts reference / Tham chiếu script
 
-**English.** All scripts are PowerShell (Windows PowerShell 5.1 or PowerShell 7), ASCII-only, and run with `powershell -NoProfile -ExecutionPolicy Bypass -File <script> ...`. The AI calls them for you; you can also run them yourself. If scripts cannot run, the AI does the same edits by hand; the rules do not change. Paths below are relative to the skill folder (for example `.claude/skills/sdf-flow/`).
+**English.** All scripts are PowerShell (Windows PowerShell 5.1 or PowerShell 7), ASCII-only, and run with `powershell -NoProfile -ExecutionPolicy Bypass -File <script> ...`. The AI calls them for you; you can also run them yourself. If scripts cannot run, the AI does the same edits by hand; the rules do not change. Paths below are relative to the skill folder (for example `.claude/skills/vlsit-sdf-flow/`).
 
-**Tiếng Việt.** Mọi script là PowerShell (Windows PowerShell 5.1 hoặc PowerShell 7), chỉ chứa ASCII, chạy bằng `powershell -NoProfile -ExecutionPolicy Bypass -File <script> ...`. AI gọi chúng giúp bạn; bạn cũng có thể tự chạy. Nếu script không chạy được, AI làm các chỉnh sửa tương tự bằng tay; quy tắc không đổi. Các đường dẫn dưới đây tính từ thư mục skill (ví dụ `.claude/skills/sdf-flow/`).
+**Tiếng Việt.** Mọi script là PowerShell (Windows PowerShell 5.1 hoặc PowerShell 7), chỉ chứa ASCII, chạy bằng `powershell -NoProfile -ExecutionPolicy Bypass -File <script> ...`. AI gọi chúng giúp bạn; bạn cũng có thể tự chạy. Nếu script không chạy được, AI làm các chỉnh sửa tương tự bằng tay; quy tắc không đổi. Các đường dẫn dưới đây tính từ thư mục skill (ví dụ `.claude/skills/vlsit-sdf-flow/`).
 
 | Script | Purpose and main parameters / Mục đích và tham số chính | Exit codes / Mã thoát |
 |---|---|---|
-| `sdf-flow/scripts/sdf-init.ps1` | Create `docs/sdf/MASTER.md` from the template. `-ProjectDir` (required), `-Name`, `-Platforms`, `-Language`, `-Track Full\|Lite\|Hotfix`. Idempotent. | 0 |
-| `sdf-flow/scripts/sdf-status.ps1` | Print the status table, the next step and the open ledger cells. `-ProjectDir`. | 0 ok; 2 not started; 3 table damaged |
-| `sdf-flow/scripts/sdf-record.ps1` | Set a step status, update "Next action", append to the change log; creates the step document from the template when the status becomes `In progress`. `-ProjectDir`, `-Step 1..8`, `-Status`, `-Note`, `-NoDoc`. | 0 |
-| `sdf-flow/scripts/sdf-gate.ps1` | Check conditions. `-Mode Start` (earlier steps approved), `Draft` (headings present, no `TODO(sdf)`), `Record` (approval written, MASTER section filled, ledger evidence for this step's column, and for step 1 at least one resource, security and cost row). `-ProjectDir`, `-Step`, `-Mode`. | 0 pass; 1 fail |
-| `sdf-flow/scripts/sdf-library.ps1` | The skill library (section 12). `-Action List\|Find\|Lint\|Add\|Update\|Check\|Test\|Export\|Remove`. | see section 12 |
-| `sdf-build/scripts/measure-memory.ps1` | Memory and CPU of a Windows program: private working set (the Task Manager number), `WorkingSet64` and private bytes for information, trend in MB per minute (leak hint), budget verdict. `-Name` or `-ProcessId` or `-Launch <exe>` (with `-LaunchArguments`), `-Scenario`, `-WarmupSeconds`, `-Seconds`, `-IntervalSeconds`, `-BudgetMB`, `-BudgetMetric Max\|Avg`, `-IncludeChildren`, `-Json`. | 0 within budget or none; 2 over budget; 1 error |
-| `sdf-review/scripts/scan-secrets.ps1` | Fallback secret scan of the working tree (keys, tokens, private-key blocks, passwords); output is redacted (first four characters and the length). Dedicated tools such as gitleaks or trufflehog are better and also scan history. `-Path`, `-ExcludeDir`, `-MaxFileKB`, `-Json`. | 0 clean; 1 findings; 2 error |
-| `sdf-review/scripts/audit-deps.ps1` | Run each ecosystem's vulnerability audit when the tool is installed (`govulncheck`, `npm audit`, `pip-audit`, `cargo audit`, `dotnet list package --vulnerable`, `osv-scanner`). **A missing tool is reported `NOT AUDITED`, never as a pass.** `-Path`, `-ExcludeDir`, `-MaxDepth`. | 0 all pass or no manifests; 1 findings; 2 error; 3 not audited |
+| `vlsit-sdf-flow/scripts/sdf-init.ps1` | Create `docs/sdf/MASTER.md` from the template. `-ProjectDir` (required), `-Name`, `-Platforms`, `-Language`, `-Track Full\|Lite\|Hotfix`. Idempotent. | 0 |
+| `vlsit-sdf-flow/scripts/sdf-status.ps1` | Print the status table, the next step and the open ledger cells. `-ProjectDir`, `-Brief` (print only the progress line: the step that is running and the steps remaining). | 0 ok; 2 not started; 3 table damaged |
+| `vlsit-sdf-flow/scripts/sdf-record.ps1` | Set a step status, update "Next action", append to the change log; creates the step document from the template when the status becomes `In progress`. `-ProjectDir`, `-Step 1..8`, `-Status`, `-Note`, `-NoDoc`. | 0 |
+| `vlsit-sdf-flow/scripts/sdf-gate.ps1` | Check conditions. `-Mode Start` (earlier steps approved), `Draft` (headings present, no `TODO(sdf)`), `Record` (approval written, MASTER section filled, ledger evidence for this step's column, and for step 1 at least one resource, security and cost row). `-ProjectDir`, `-Step`, `-Mode`. | 0 pass; 1 fail |
+| `vlsit-sdf-flow/scripts/sdf-library.ps1` | The skill library (section 12). `-Action List\|Find\|Lint\|Add\|Update\|Check\|Test\|Export\|Remove`. | see section 12 |
+| `vlsit-sdf-build/scripts/measure-memory.ps1` | Memory and CPU of a Windows program: private working set (the Task Manager number), `WorkingSet64` and private bytes for information, trend in MB per minute (leak hint), budget verdict. `-Name` or `-ProcessId` or `-Launch <exe>` (with `-LaunchArguments`), `-Scenario`, `-WarmupSeconds`, `-Seconds`, `-IntervalSeconds`, `-BudgetMB`, `-BudgetMetric Max\|Avg`, `-IncludeChildren`, `-Json`. | 0 within budget or none; 2 over budget; 1 error |
+| `vlsit-sdf-review/scripts/scan-secrets.ps1` | Fallback secret scan of the working tree (keys, tokens, private-key blocks, passwords); output is redacted (first four characters and the length). Dedicated tools such as gitleaks or trufflehog are better and also scan history. `-Path`, `-ExcludeDir`, `-MaxFileKB`, `-Json`. | 0 clean; 1 findings; 2 error |
+| `vlsit-sdf-review/scripts/audit-deps.ps1` | Run each ecosystem's vulnerability audit when the tool is installed (`govulncheck`, `npm audit`, `pip-audit`, `cargo audit`, `dotnet list package --vulnerable`, `osv-scanner`). **A missing tool is reported `NOT AUDITED`, never as a pass.** `-Path`, `-ExcludeDir`, `-MaxDepth`. | 0 all pass or no manifests; 1 findings; 2 error; 3 not audited |
 | `tools/install.ps1` | Install the nine skills. `-Target`, `-Tool claude\|codex\|both`, `-User`, `-Force`. | 0 |
 | `tools/sync-codex-skills.ps1` | Mirror `.claude/skills` to `.agents/skills`. `-Check` changes nothing and exits 1 if out of sync. | 0 in sync; 1 out of sync with `-Check` |
 | `tools/verify-skills.ps1` | Structure, required rules, paths, scripts, and smoke tests (section 17). `-SkipSmoke` skips the script tests. | 0 all pass; 1 failures |
@@ -513,15 +540,15 @@ Examples / Ví dụ:
 
 ```powershell
 # Memory of a running app: S1, 60 s warm-up, 60 s sampling, 30 MB budget, helper processes included
-powershell -NoProfile -ExecutionPolicy Bypass -File .claude\skills\sdf-build\scripts\measure-memory.ps1 `
+powershell -NoProfile -ExecutionPolicy Bypass -File .claude\skills\vlsit-sdf-build\scripts\measure-memory.ps1 `
   -Name myapp -Scenario S1 -WarmupSeconds 60 -Seconds 60 -BudgetMB 30 -IncludeChildren
 
 # Secret scan and dependency audit of a project
-powershell -NoProfile -ExecutionPolicy Bypass -File .claude\skills\sdf-review\scripts\scan-secrets.ps1 -Path C:\work\myapp
-powershell -NoProfile -ExecutionPolicy Bypass -File .claude\skills\sdf-review\scripts\audit-deps.ps1 -Path C:\work\myapp
+powershell -NoProfile -ExecutionPolicy Bypass -File .claude\skills\vlsit-sdf-review\scripts\scan-secrets.ps1 -Path C:\work\myapp
+powershell -NoProfile -ExecutionPolicy Bypass -File .claude\skills\vlsit-sdf-review\scripts\audit-deps.ps1 -Path C:\work\myapp
 
 # Status of the flow in a project
-powershell -NoProfile -ExecutionPolicy Bypass -File .claude\skills\sdf-flow\scripts\sdf-status.ps1 -ProjectDir C:\work\myapp
+powershell -NoProfile -ExecutionPolicy Bypass -File .claude\skills\vlsit-sdf-flow\scripts\sdf-status.ps1 -ProjectDir C:\work\myapp
 ```
 
 ---
@@ -529,9 +556,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .claude\skills\sdf-flow\scri
 <a id="library"></a>
 ## 12. The skill library / Thư viện script
 
-**English.** While building, the AI sometimes writes a script that would help the next project too (a measurement helper, a backup before a migration, a hash manifest for a release). Those scripts are kept in `sdf-flow/library/` so that later builds **find and run them instead of writing them again**, which saves effort and therefore cost. The library contains `index.json` (the registry), `INDEX.md` (a generated table to read), `scripts/` and `LESSONS.md`. Two scripts ship as examples: `backup-folder.ps1` (timestamped zip backup of a folder before a migration or risky change) and `artifact-manifest.ps1` (a Markdown table of release files with sizes and SHA-256).
+**English.** While building, the AI sometimes writes a script that would help the next project too (a measurement helper, a backup before a migration, a hash manifest for a release). Those scripts are kept in `vlsit-sdf-flow/library/` so that later builds **find and run them instead of writing them again**, which saves effort and therefore cost. The library contains `index.json` (the registry), `INDEX.md` (a generated table to read), `scripts/` and `LESSONS.md`. Two scripts ship as examples: `backup-folder.ps1` (timestamped zip backup of a folder before a migration or risky change) and `artifact-manifest.ps1` (a Markdown table of release files with sizes and SHA-256).
 
-**Tiếng Việt.** Trong lúc xây dựng, AI đôi khi viết một script cũng hữu ích cho dự án sau (script đo, sao lưu trước khi chuyển đổi, bảng băm cho bản phát hành). Các script đó được giữ trong `sdf-flow/library/` để các lần build sau **tìm và chạy lại thay vì viết lại**, giúp tiết kiệm công sức và do đó tiết kiệm chi phí. Thư viện gồm `index.json` (sổ đăng ký), `INDEX.md` (bảng sinh tự động để đọc), `scripts/` và `LESSONS.md`. Có sẵn hai script mẫu: `backup-folder.ps1` (sao lưu zip có đóng dấu thời gian cho một thư mục trước khi chuyển đổi hoặc thay đổi rủi ro) và `artifact-manifest.ps1` (bảng Markdown các tệp phát hành kèm kích thước và SHA-256).
+**Tiếng Việt.** Trong lúc xây dựng, AI đôi khi viết một script cũng hữu ích cho dự án sau (script đo, sao lưu trước khi chuyển đổi, bảng băm cho bản phát hành). Các script đó được giữ trong `vlsit-sdf-flow/library/` để các lần build sau **tìm và chạy lại thay vì viết lại**, giúp tiết kiệm công sức và do đó tiết kiệm chi phí. Thư viện gồm `index.json` (sổ đăng ký), `INDEX.md` (bảng sinh tự động để đọc), `scripts/` và `LESSONS.md`. Có sẵn hai script mẫu: `backup-folder.ps1` (sao lưu zip có đóng dấu thời gian cho một thư mục trước khi chuyển đổi hoặc thay đổi rủi ro) và `artifact-manifest.ps1` (bảng Markdown các tệp phát hành kèm kích thước và SHA-256).
 
 ### Life of a script / Vòng đời của một script
 
@@ -542,7 +569,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .claude\skills\sdf-flow\scri
 | Prepare / Chuẩn bị | Generalised (parameters, help text, ASCII only), given a `-Selftest`, linted. / Tổng quát hóa (tham số, trợ giúp, chỉ ASCII), có `-Selftest`, được lint. |
 | Propose / Đề xuất | One batch at step approval: what it does, why it helps again, safety flags, test evidence, options (save, keep in this project only, drop). / Một lô khi duyệt bước: chức năng, lý do hữu ích, cờ an toàn, bằng chứng kiểm thử, các phương án (lưu, chỉ giữ trong dự án này, bỏ). |
 | Save / Lưu | `-Action Add ... -ApprovedBy "<your words, date>"`: lint again, SHA-256 recorded, index updated, mirrored to the other tool tree. / Lint lại, ghi SHA-256, cập nhật chỉ mục, đồng bộ sang cây của công cụ còn lại. |
-| Carry on / Mang sang | `-Action Export -Id LIB-nnn -Dest "<master>\.claude\skills\sdf-flow"` copies it into your master copy; then run `tools\sync-codex-skills.ps1` and `tools\verify-skills.ps1` there. Or install at user level so all projects share one library. / Xuất sang bản gốc của bạn, rồi chạy đồng bộ và kiểm tra ở đó. Hoặc cài ở mức người dùng để mọi dự án dùng chung một thư viện. |
+| Carry on / Mang sang | `-Action Export -Id LIB-nnn -Dest "<master>\.claude\skills\vlsit-sdf-flow"` copies it into your master copy; then run `tools\sync-codex-skills.ps1` and `tools\verify-skills.ps1` there. Or install at user level so all projects share one library. / Xuất sang bản gốc của bạn, rồi chạy đồng bộ và kiểm tra ở đó. Hoặc cài ở mức người dùng để mọi dự án dùng chung một thư viện. |
 
 ### `sdf-library.ps1` actions / Các hành động
 
@@ -555,7 +582,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .claude\skills\sdf-flow\scri
 | `Update -Id -Path -ApprovedBy` | New version of a script; version rises, history keeps the reason. / Phiên bản mới; số phiên bản tăng, lịch sử giữ lý do. | 0 |
 | `Check` | Compare every file with its recorded SHA-256; report `MODIFIED`, `MISSING`, `UNREGISTERED`. / So từng tệp với SHA-256 đã ghi. | 0; 1 problems |
 | `Test [-Id]` | Run each script's self-test (`-Selftest`); refuses a modified script. / Chạy tự kiểm tra; từ chối script bị sửa. | 0; 1 failures |
-| `Export -Id -Dest` | Copy an entry to another copy of `sdf-flow`. / Sao chép một mục sang bản `sdf-flow` khác. | 0 |
+| `Export -Id -Dest` | Copy an entry to another copy of `vlsit-sdf-flow`. / Sao chép một mục sang bản `vlsit-sdf-flow` khác. | 0 |
 | `Remove -Id -ApprovedBy` | Unregister and delete a script. / Gỡ đăng ký và xóa script. | 0 |
 
 ### Policy and safeguards / Chính sách và rào chắn an toàn
@@ -573,7 +600,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .claude\skills\sdf-flow\scri
 |---|---|---|
 | Typical stacks (step 2) / Công nghệ thường gặp | Native compiled; compiled core with a local web UI; .NET; system web view shell; bundled browser runtime; Qt | Android native (Kotlin, Compose); iOS native (Swift, SwiftUI); Kotlin Multiplatform; Flutter; React Native; web view hybrid |
 | Memory metric / Chỉ số bộ nhớ | Private working set (Windows), PSS (Linux), physical footprint (macOS) | TOTAL PSS (Android), memory footprint (iOS) |
-| How to measure / Cách đo | `measure-memory.ps1`, Task Manager, VMMap, Performance Monitor | `adb shell dumpsys meminfo <package>`, Android Studio Profiler; Xcode memory gauge, Instruments. See `sdf-build/references/platform-measurement.md` |
+| How to measure / Cách đo | `measure-memory.ps1`, Task Manager, VMMap, Performance Monitor | `adb shell dumpsys meminfo <package>`, Android Studio Profiler; Xcode memory gauge, Instruments. See `vlsit-sdf-build/references/platform-measurement.md` |
 | Security focus / Trọng tâm bảo mật | Install paths and DLL search order, per-user data permissions, local server hardening, signed installer and updates | Minimal permissions, exported components and deep links, secure storage (Keystore, Keychain), transport security, MASVS level |
 | Signing / Ký | Authenticode code-signing certificate with a timestamp; MSIX needs a signed package | Android keystore and Play App Signing; Apple developer program, certificates, notarisation for macOS outside the store |
 | Distribution / Phân phối | Portable file, installer, store listing | Google Play, App Store and TestFlight, direct APK for small groups |
@@ -590,7 +617,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .claude\skills\sdf-flow\scri
 
 ```
 .claude/skills/              source of truth, read by Claude Code / bản gốc, Claude Code đọc
-  sdf-flow/
+  vlsit-sdf-flow/
     SKILL.md  README.md
     scripts/                 sdf-init, sdf-status, sdf-record, sdf-gate, sdf-library
     library/                 index.json, INDEX.md, LESSONS.md, scripts/ (reusable scripts)
@@ -603,14 +630,14 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .claude\skills\sdf-flow\scri
       master-template.md         structure of MASTER.md
       required-headings.txt      headings every step document must have
       templates/                 01-requirements.md ... 08-feedback.md
-  sdf-requirements/  references/ question-bank.md, requirement-quality.md
-  sdf-options/       references/ scoring-method.md, stack-options.md
-  sdf-design/        references/ design-checklist.md, resource-design.md, threat-model.md
-  sdf-plan/          references/ plan-checklist.md
-  sdf-build/         scripts/ measure-memory.ps1; references/ build-checklist.md, platform-measurement.md
-  sdf-review/        scripts/ scan-secrets.ps1, audit-deps.ps1; references/ review-checklist.md
-  sdf-release/       references/ release-checklist.md
-  sdf-feedback/      references/ feedback-checklist.md
+  vlsit-sdf-requirements/  references/ question-bank.md, requirement-quality.md
+  vlsit-sdf-options/       references/ scoring-method.md, stack-options.md
+  vlsit-sdf-design/        references/ design-checklist.md, resource-design.md, threat-model.md
+  vlsit-sdf-plan/          references/ plan-checklist.md
+  vlsit-sdf-build/         scripts/ measure-memory.ps1; references/ build-checklist.md, platform-measurement.md
+  vlsit-sdf-review/        scripts/ scan-secrets.ps1, audit-deps.ps1; references/ review-checklist.md
+  vlsit-sdf-release/       references/ release-checklist.md
+  vlsit-sdf-feedback/      references/ feedback-checklist.md
 .agents/skills/              exact copy for Codex / bản sao giống hệt cho Codex
 tools/                       install.ps1, sync-codex-skills.ps1, verify-skills.ps1
 ```
@@ -629,7 +656,7 @@ tools/                       install.ps1, sync-codex-skills.ps1, verify-skills.p
 .\tools\verify-skills.ps1            # structure, rules still present, scripts, smoke tests
 ```
 
-**English.** `verify-skills.ps1` fails if: a skill loses a required rule (the "Why I ask" protocol, options with pros and cons, the approval gate, the resource, security and cost gates, the independence of the review, the explicit confirmation before publishing, the library policy); the two trees differ; a referenced path is missing; a required heading is missing from a template; a script is not ASCII or does not parse; or any smoke test fails (gates, ledger rules, secret scan, audit logic, memory measurement, and the whole library life cycle on a scratch copy). Conventions: skill text is English and tool-neutral (frontmatter limited to `name` and `description`); descriptions stay under about 1000 characters and without `: ` or ` #` (plain YAML); each `SKILL.md` stays under 500 lines, with detail in `references/`; paths in skill text are relative to the skill folder; README files are bilingual; scripts are ASCII-only and tested on Windows PowerShell 5.1.
+**English.** `verify-skills.ps1` fails if: a skill loses a required rule (the "Why I ask" protocol, the progress line, options with pros and cons, the approval gate, the resource, security and cost gates, the independence of the review, the explicit confirmation before publishing, the library policy); the two trees differ; a referenced path is missing; a required heading is missing from a template; a script is not ASCII or does not parse; or any smoke test fails (gates, ledger rules, secret scan, audit logic, memory measurement, and the whole library life cycle on a scratch copy). Conventions: skill text is English and tool-neutral (frontmatter limited to `name` and `description`); descriptions stay under about 1000 characters and without `: ` or ` #` (plain YAML); each `SKILL.md` stays under 500 lines, with detail in `references/`; paths in skill text are relative to the skill folder; README files are bilingual; scripts are ASCII-only and tested on Windows PowerShell 5.1.
 
 **Tiếng Việt.** `verify-skills.ps1` báo lỗi nếu: một skill mất quy tắc bắt buộc (giao thức "Vì sao tôi hỏi", phương án kèm ưu nhược điểm, cổng duyệt, cổng tài nguyên, bảo mật và chi phí, tính độc lập của rà soát, xác nhận rõ ràng trước khi phát hành, chính sách thư viện); hai cây thư mục khác nhau; một đường dẫn được tham chiếu không tồn tại; thiếu tiêu đề bắt buộc trong mẫu; một script không phải ASCII hoặc không phân tích được; hoặc bất kỳ kiểm thử khói nào hỏng (cổng, quy tắc sổ bằng chứng, quét bí mật, logic kiểm tra phụ thuộc, đo bộ nhớ, và toàn bộ vòng đời thư viện trên bản sao thử). Quy ước: nội dung skill bằng tiếng Anh và trung lập công cụ (frontmatter chỉ `name` và `description`); mô tả dưới khoảng 1000 ký tự và không chứa `: ` hay ` #` (YAML thuần); mỗi `SKILL.md` dưới 500 dòng, chi tiết đặt trong `references/`; đường dẫn trong nội dung skill tính từ thư mục skill; README song ngữ; script chỉ ASCII và được thử trên Windows PowerShell 5.1.
 
@@ -644,8 +671,10 @@ tools/                       install.ps1, sync-codex-skills.ps1, verify-skills.p
 
 | Problem / Vấn đề | Cause and fix / Nguyên nhân và cách xử lý |
 |---|---|
-| The skills do not appear in `/skills`. / Skill không hiện trong `/skills`. | Check the folders are in the right place (section 5): `.claude/skills/sdf-*` for Claude Code, `.agents/skills/sdf-*` for Codex. Claude Code: `/reload-skills` if the skills folder was just created. Codex: restart. Install all nine folders. / Kiểm tra thư mục đúng chỗ (mục 5). Claude Code: `/reload-skills` nếu vừa tạo thư mục. Codex: khởi động lại. Cài đủ chín thư mục. |
-| The AI says the sibling folders are missing. / AI báo thiếu thư mục anh em. | A step skill was installed alone. Install the complete `sdf-*` set. / Một skill bước được cài riêng lẻ. Cài đủ bộ `sdf-*`. |
+| The skills do not appear in `/skills`. / Skill không hiện trong `/skills`. | Check the folders are in the right place (section 5): `.claude/skills/vlsit-sdf-*` for Claude Code, `.agents/skills/vlsit-sdf-*` for Codex. Claude Code: `/reload-skills` if the skills folder was just created. Codex: restart. Install all nine folders. / Kiểm tra thư mục đúng chỗ (mục 5). Claude Code: `/reload-skills` nếu vừa tạo thư mục. Codex: khởi động lại. Cài đủ chín thư mục. |
+| The AI says the sibling folders are missing. / AI báo thiếu thư mục anh em. | A step skill was installed alone. Install the complete `vlsit-sdf-*` set. / Một skill bước được cài riêng lẻ. Cài đủ bộ `vlsit-sdf-*`. |
+| Old `sdf-*` skills are still listed next to the new ones. / Các skill `sdf-*` cũ vẫn hiện cạnh skill mới. | The skills were renamed to `vlsit-sdf-*`. Delete the old folders in `.claude/skills`, `.agents/skills` and `$HOME` (section 5, "Upgrading from the former names"). / Skill đã đổi tên thành `vlsit-sdf-*`. Xóa các thư mục cũ (mục 5, "Nâng cấp từ tên cũ"). |
+| The AI asks something without saying which step it is in. / AI hỏi mà không nói đang ở bước nào. | Every question must start with the progress line (the step that is running, the steps remaining). Remind it: "start with the progress line" and run `sdf-status.ps1 -Brief` to check the status table. / Mọi câu hỏi phải mở đầu bằng dòng tiến độ. Hãy nhắc: "mở đầu bằng dòng tiến độ" và chạy `sdf-status.ps1 -Brief` để kiểm tra bảng trạng thái. |
 | A script is blocked by the execution policy. / Script bị chặn bởi chính sách thực thi. | Run it as `powershell -NoProfile -ExecutionPolicy Bypass -File ...` as shown. Never change the machine policy permanently for this. / Chạy như `powershell -NoProfile -ExecutionPolicy Bypass -File ...`. Không đổi chính sách máy vĩnh viễn vì việc này. |
 | No PowerShell (macOS, Linux). / Không có PowerShell. | Install PowerShell 7 (`pwsh`) and call the scripts with it, or let the AI do the edits by hand. `measure-memory.ps1` is Windows only; use the tools in `platform-measurement.md`. / Cài PowerShell 7 hoặc để AI làm bằng tay. `measure-memory.ps1` chỉ cho Windows. |
 | A gate fails ("Missing required heading", "unreplaced TODO(sdf)", "Ledger row ... has no evidence"). / Cổng báo lỗi. | Read the `FAIL:` lines: they say which heading, line or ledger cell to fix. The AI fixes them before asking for approval. Ledger cells need evidence, `NOT MEASURED` (which blocks), or a `WAIVER-nnn`. / Đọc các dòng `FAIL:`: chúng nói rõ tiêu đề, dòng hoặc ô sổ cần sửa. |
@@ -678,7 +707,7 @@ tools/                       install.ps1, sync-codex-skills.ps1, verify-skills.p
 | Term / Thuật ngữ | Meaning / Ý nghĩa |
 |---|---|
 | Skill | A folder with a `SKILL.md` that Codex or Claude Code loads on demand. / Thư mục có `SKILL.md` mà Codex hoặc Claude Code nạp khi cần. |
-| Orchestrator / Skill tổng | `sdf-flow`, which runs the steps and the gates. / `sdf-flow`, chạy các bước và các cổng. |
+| Orchestrator / Skill tổng | `vlsit-sdf-flow`, which runs the steps and the gates. / `vlsit-sdf-flow`, chạy các bước và các cổng. |
 | Gate / Cổng | A check that must pass before a step starts, is presented, or is recorded. / Điểm kiểm tra phải đạt trước khi bắt đầu, trình bày hoặc ghi nhận một bước. |
 | MASTER.md | The consolidated record of the project. / Bản ghi tổng hợp của dự án. |
 | Evidence ledger / Sổ bằng chứng | Table tracking each resource, security and cost requirement through the steps. / Bảng theo dõi từng yêu cầu tài nguyên, bảo mật, chi phí qua các bước. |
@@ -698,11 +727,13 @@ tools/                       install.ps1, sync-codex-skills.ps1, verify-skills.p
 ---
 
 <a id="license"></a>
-## 19. Documentation and license / Tài liệu và giấy phép
+## 19. Documentation, author and license / Tài liệu, tác giả và giấy phép
 
 - [Claude Code skills](https://code.claude.com/docs/en/skills)
 - [Codex skills](https://developers.openai.com/codex/skills)
 - [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/), [OWASP MASVS](https://mas.owasp.org/MASVS/), [NIST SSDF (SP 800-218)](https://csrc.nist.gov/pubs/sp/800/218/final)
 - Issues and feedback / Báo lỗi và góp ý: <https://github.com/nguyenquanicd/VLSIT_Software_Development_FLow/issues>
+
+**Author / Tác giả:** Nguyễn Quân — GitHub [@nguyenquanicd](https://github.com/nguyenquanicd) — repository [VLSIT_Software_Development_FLow](https://github.com/nguyenquanicd/VLSIT_Software_Development_FLow). The author line is also in [NOTICE](NOTICE), in every skill (`SKILL.md` and `README.md`), in the MASTER template and in the header of every script. / Dòng tác giả cũng có trong [NOTICE](NOTICE), trong mọi skill (`SKILL.md` và `README.md`), trong mẫu MASTER và trong phần đầu của mọi script.
 
 **License / Giấy phép:** Apache License 2.0 — see [LICENSE](LICENSE). / xem [LICENSE](LICENSE).
